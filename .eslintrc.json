@@ -1,0 +1,35 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+
+    "extends": "eslint:recommended",
+
+    "globals": {
+        "requirejs": 1,
+        "require": 1,
+        "define": 1,
+        "$": 1
+    },
+
+    "rules": {
+        "indent": [
+            2,
+            "tab"
+        ],
+        "linebreak-style": [
+            2,
+            "unix"
+        ],
+        "quotes": [
+            2,
+            "double"
+        ],
+        "semi": [
+            2,
+            "always"
+        ],
+        "no-console": 0
+    }
+}
