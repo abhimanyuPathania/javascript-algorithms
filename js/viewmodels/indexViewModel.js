@@ -1,9 +1,10 @@
+"use strict";
 
 define( ["knockout","jquery"], function(ko, $) {
 
-	return function indexViewModel() {
+	return function IndexViewModel() {
 
 		var self = this;
-		console.log("knockout-require working");
+		self.parentRef = self;
 	};
 });

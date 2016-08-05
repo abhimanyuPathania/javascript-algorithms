@@ -1,3 +1,38 @@
-body {
-	color: #554;
+@import "constants/all";
+
+@import "components/all";
+
+@import "vendor/prism";
+
+.box-highlight{
+	padding: 5px 10px;
+	background-color: #f1f1f1;
+	border-radius: 5px;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 14px;
+	font-weight: $font-weight-bold;
 }
+
+
+
+pre[class*="language-"]{
+	font-size: 14px;
+	padding: 0 1em;
+
+	border-left: 5px solid $javascript-logo-yellow;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+
+	max-width: 80%;
+	margin: 0px auto;
+}
+
+// add the hexa background to code blocks
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background-image: url("/dist/img/backgrounds/hexa.png");
+}
+
+
+
+

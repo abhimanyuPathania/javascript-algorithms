@@ -1,0 +1,12 @@
+@import "constants/variables";
+
+@mixin apply-transition($prop, $duration, $timing-function){
+
+	transition-property: $prop;
+	transition-duration: $duration;
+	transition-timing-function: $timing-function;
+}
+
+.test{
+	@include apply-transition((background-color, color) , 300ms, ease-out);
+}

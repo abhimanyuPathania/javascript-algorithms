@@ -1,0 +1,52 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box; 
+  	 -moz-box-sizing: border-box; 
+  		  box-sizing: border-box;
+}
+
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+:focus {
+    outline: 0;
+}
+
+a,
+button {
+    color: inherit;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+button {
+    overflow: visible;
+    border: 0;
+    font: inherit;
+    -webkit-font-smoothing: inherit;
+    letter-spacing: inherit;
+    background: none;
+    cursor: pointer;
+}
+
+input[type=text]{
+    font: inherit;
+    -webkit-font-smoothing: inherit;
+    letter-spacing: inherit;
+    color:inherit;
+    background-color: inherit;
+}

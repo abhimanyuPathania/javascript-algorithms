@@ -1,0 +1,56 @@
+
+// Layout
+$menu-width-desktop: 18%;
+
+
+// Typography and Colors
+$font-size-base: 16px;
+$font-size-code: 14px;
+$font-size-page-heading: 36px; //h1
+$font-size-page-subheading: 24px; //h2
+$font-size-icon-base: 24px;
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-bold: 600;
+
+$font-color-main: hsla(0, 0%, 40%, 1);
+$font-color-sidebar: hsla(0, 0%, 90%, 1);
+$border-color-input: hsla(0, 0%, 75%, 1); // placeholders as well
+$border-color-very-light-grey: hsla(0, 0%, 94%, 1);
+
+
+$background-color-page-content-grey: #FAFAFA;
+$javascript-logo-yellow: #F0DB4F;
+$sidebar-dark-purple: #444349;
+$highlight-error-red: #F1978E; 
+
+$button-bgc: hsla(0, 0%, 86%, 1); 
+$button-bgc-disabled: hsla(0, 0%, 95%, 1);
+
+
+// Transitions
+$transition-duration-base: 250ms;
+$transition-duration-fast: 150ms;
+
+
+// Form fields and Buttons
+$input-text-height: 36px;
+$padding-left-input-text: 12px; //used for select-list as well
+
+$button-height: 36px;
+$button-width: 80px;
+$button-bgc-darken-offset: 8%;
+$button-icon-bgc-darken-offset: 5%;
+
+$button-map: (
+	btn-grey: (
+		background-color: $button-bgc,
+		color: $font-color-main
+	),
+
+	btn-yellow: (
+		background-color: $javascript-logo-yellow,
+		color: #FFF
+	)
+);

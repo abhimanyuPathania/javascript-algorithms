@@ -1,0 +1,231 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+	<title>Sorting</title>
+{% endblock %}
+
+{% block style_sheets %}
+	<link rel="stylesheet" href="../dist/css/sorting.css">
+{% endblock %}
+
+
+{% block scripts %}	
+	<script data-main="../js/sortingMain"  src="../js/lib/require.js"></script>
+{% endblock %}
+
+{% block header %}
+	<h1>Sorting</h1>
+{% endblock %}
+
+{% block content %}	
+	<div id="sort">
+		
+		<div class="sort-wrapper" data-bind="visible:displaySort.bubbleSort">
+			<h2>Bubble Sort</h2>
+			<div class="sort-running-time">
+				<span>Running Time: <span class="box-highlight">O(N<sup>2</sup>)</span></span>
+			</div>
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function bubbleSort(arr) {
+	var inner;
+	var outer;
+	var temp;
+	
+	// Outer loop starts at the last element of "arr" and is
+	// decremented every iteration.
+	for (outer = arr.length - 1; outer &gt; 0; outer -= 1) {
+
+		// For every iteration of outer; compare every two elements
+		// of "arr" sequentially.
+		for (inner = 0; inner &lt; outer; inner += 1) {
+
+			// Swap the bigger element to higher index.
+			if (arr[inner] &gt; arr[inner + 1]) {
+				//swap
+				temp = arr[inner];
+				arr[inner] = arr[inner + 1];
+				arr[inner + 1] = temp;
+			}
+			// Keep swapping till the largest item bubbles up.
+		}
+
+		// Now the largest element is at the last index position.
+		// Outer loop is decremented and the 2'nd largest element
+		// will follow it in next interation...
+	}
+	return arr;
+}
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					The idea is to keep swaping the biggest element up the array. Array gets sorted as bigger elements keep 'bubbling' up. The Bubble Sort is notoriously slow. Both the swap and comparison operations are propotional to <span class="box-highlight">O(N<sup>2</sup>)</span>.
+				</p>
+			</div><!-- END SORT-TEXT -->
+		</div><!-- END SORT-WRAPPER -->
+		
+		<div class="sort-wrapper" data-bind="visible:displaySort.selectionSort">
+			<h2>Selection Sort</h2>
+			<div class="sort-running-time">
+				<p>Running Time: <span class="box-highlight">O(N<sup>2</sup>)</span></p>
+			</div>
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function selectionSort(arr) {
+	var inner;
+	var outer;
+	var min;
+	var temp;
+
+	for(outer = 0; outer &lt; arr.length; outer += 1) {
+
+		// assume the first element of iterartion to be the smallest
+		min = outer;
+
+		// scan the rest for to find the smallest element
+		for(inner = outer + 1; inner &lt; arr.length; inner += 1) {
+			if (arr[inner] &lt; arr[min]) {
+
+				// update the min to index of smallest element.
+				min = inner;
+			}
+		}
+
+		// swap the smallest element with first element of outer loop's
+		// interation(0,1,2,3...)	
+		temp = arr[outer];
+		arr[outer] = arr[min];
+		arr[min] = temp;
+	}
+	return arr;
+}
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					The Selection Sort finds the smallest element in every iteration and puts it in front of the array. It is a little better than the <a href="/sorting#bubblesort">Bubble Sort</a> since swaps are propotional to <span class="box-highlight">O(N)</span>. But the comparisons are still of the order of <span class="box-highlight">O(N<sup>2</sup>)</span>.
+				</p>
+			</div><!-- END SORT-TEXT -->
+		</div><!-- END SORT-WRAPPER -->
+		
+		<div class="sort-wrapper" data-bind="visible:displaySort.insertionSort">
+			<h2>Insertion Sort</h2>
+			<div class="sort-running-time">
+				<p>Running Time: <span class="box-highlight">O(N<sup>2</sup>)</span></p>
+			</div>
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function insertionSort(arr){
+	var outer;
+	var inner;
+	var temp;
+
+	for (outer = 1; outer &lt; arr.length; outer += 1) {
+
+		// arr[0](single element) is assumed to be the sorted section of array.
+		// "temp" variable has the marker which is "inserted" at the correct position
+		// of the section of array assumed to be sorted.
+		temp = arr[outer];
+		inner = outer;
+
+		// while the marker is bigger than inner item
+		while(inner &gt; 0 &amp;&amp; arr[inner-1] &gt; temp) {
+
+			//keep shifting the inner items forward
+			arr[inner] = arr[inner-1];
+			inner -= 1;
+		}
+
+		// "insert" the marker in correct index.
+		arr[inner] = temp;
+	}
+}
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					For insertion Sort we assume that the elements to the left of the marker element(starting from 2'nd element of the array) are already sorted and the marker is inserted in correct spot to the sorted section during each iteration.
+					</br>
+					It is faster than both Bubble and Selection sort but still runs at <span class="box-highlight">O(N<sup>2</sup>)</span>. But, if the data is almost sorted, insertion sort runs in almost O(N) time. 
+				</p>
+			</div><!-- END SORT-TEXT -->
+		</div><!-- END SORT-WRAPPER -->
+
+		<div data-bind="visible: displaySort.mergeSort">
+			<h4>Merge Sort</h4>
+		</div>
+
+		<div data-bind="visible: displaySort.shellSort">
+			<h4>Shell Sort</h4>
+		</div>
+		
+		<div data-bind="visible: displaySort.shellSort">
+			<h4>Quick Sort</h4>
+		</div>	
+	</div><!-- END SORT DIV-->
+
+	<div id="sorting-test-bench-wrapper">
+		<h2>Test Bench</h2>
+
+		<p>
+			Try running different sorting algorithms to see how fast they are compared to each other. You can select multiple sort algorithms which will run on the same, randomly generated, unsorted, array.
+		</p>
+
+		<p>
+			Pick an array size which is large enough to give comparable results. Array size of around 5000 is a good starting point. 
+		</p>
+		
+		<div id="sorting-test-bench" class="clearfix">
+			<div id="sorting-test-bench-inputs">
+
+				<div class="sorting-test-bench-input-field">
+					<select-list
+						params = "options: availableSorts,
+								  selectedOptions: testBenchSorts,
+								  multiple: true,
+								  parentRef: parentRef">
+					</select-list>					
+				</div><!-- sorting-test-bench-input-field -->
+
+				<div class="sorting-test-bench-input-field">
+					<input type="text" data-bind="textInput: randomArraySize", placeholder="Enter array size">					
+				</div><!-- sorting-test-bench-input-field -->
+
+				<div id="sorting-test-bench-controls" class="sorting-test-bench-input-field">
+
+					<button type="button" class="icon-text-btn btn-grey" data-bind="click: stopTestBench,
+													 				disable: enableRunButton">
+						<span class="firefox-wrapper">
+							<i class="material-icons">pan_tool</i>
+							<span>stop</span>
+						</span>
+					</button>
+
+					<button type="button" class="icon-text-btn btn-yellow" data-bind="click: runTestBench,
+													 enable: webWorkerSynced && enableRunButton">
+						<span class="firefox-wrapper">
+							<i class="material-icons">send</i>
+							<span>run</span>
+						</span>
+					</button>
+
+				</div><!-- sorting-test-bench-input-field -->
+
+				<div id="sorting-test-bench-error" class="sorting-test-bench-input-field">
+					<span>Please enter a valid value for array size.</span>
+				</div><!-- sorting-test-bench-input-field -->
+
+			</div><!-- sorting-test-bench-inputs -->
+
+			<div id="sorting-test-bench-results">
+				<p>RESULTS!!</p>
+			</div>
+
+		</div><!-- sorting-test-bench -->
+	</div><!-- sorting-test-bench-wrapper -->
+{% endblock %}

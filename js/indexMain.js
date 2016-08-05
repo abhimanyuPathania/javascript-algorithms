@@ -1,3 +1,4 @@
+"use strict";
 
 requirejs.config({
 	paths: {
@@ -8,10 +9,11 @@ requirejs.config({
 
 
 require(
-	["knockout", "viewmodels/indexViewModel", "lib/domReady!"],
+	["knockout", "viewmodels/indexViewModel", "components/sidebar/sidebarViewModel", "lib/domReady!"],
 	
-	function(ko, indexViewModel) {
-		ko.applyBindings(new indexViewModel());
+	function(ko, IndexViewModel, sidebarComponent) {
+		ko.components.register("sidebar", sidebarComponent);
+		ko.applyBindings(new IndexViewModel());
 	}
 );
 

@@ -1,0 +1,126 @@
+
+// @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(/dist/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+       url(/dist/iconfont/MaterialIcons-Regular.woff) format('woff'),
+       url(/dist/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;  /* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+
+body {
+	font-family: "Open Sans", sans-serif;
+	color: $font-color-main;
+	font-weight: $font-weight-regular;
+	font-size: $font-size-base;
+	line-height: 1;
+	-moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+
+    background-color: $background-color-page-content-grey;
+}
+
+
+h1,
+h2,
+h3,
+h4 {
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: capitalize;
+}
+
+strong {
+	font-weight: $font-weight-bold;
+}
+
+#logo {
+	background-color: $javascript-logo-yellow;
+	color: $sidebar-dark-purple;
+}
+
+
+#sidebar {
+	background-color: $sidebar-dark-purple;
+	background-image: url("/dist/img/backgrounds/stardust.png");
+	background-repeat: repeat-y; 
+	color: $font-color-sidebar;
+}
+
+#sidebar .menu-item {
+
+	.sub-menu-dropdown{
+		user-select: none;
+		cursor: context-menu; 
+	}
+
+	a:hover,
+	.sub-menu-dropdown:hover {
+		background-color: rgba(0, 0, 0, 0.2);
+		text-shadow: 0px 0px 6px rgba(#FFF, 0.4);
+		color: #FFF;
+	}
+	
+	// font-size for sub-menu-items set in the layout partial
+	// due to slide down transitions ($font-size-base - 2px)
+	
+	// when the menu-item or the submenu item is active i.e current page.
+	// "active class not applied to 'sub-menu-dropdown'", hence only contain
+	// children anchor tags.
+	// Target anchors to override specificity of hover styles
+	&.active a,
+	.sub-menu-item.active a{		
+		color: $javascript-logo-yellow;
+		text-shadow: 0px 0px 10px rgba($javascript-logo-yellow, 0.6);
+		background-color: rgba(0, 0, 0, 0.2);
+	}
+
+}
+
+#header h1{
+
+	font-size: $font-size-page-heading;
+	font-weight: $font-weight-light;
+}
+
+#content h2{
+	font-size: $font-size-page-subheading;
+}
+
+p{
+	line-height: 1.5;
+}
+
+#footer{
+	background-color: #f1f1f1;
+	padding: 20px 0px;
+}

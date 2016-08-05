@@ -1,0 +1,17 @@
+/*
+	@include apply-transition((background-color, color) , 300ms, ease-out);
+	
+	{
+		transition-property: background-color, color;
+		transition-duration: 300ms;
+		transition-timing-function: ease-out;
+	} 
+*/
+
+@mixin apply-transition($prop, $duration, $timing-function){
+
+	transition-property: $prop;
+	transition-duration: $duration;
+	transition-timing-function: $timing-function;
+
+}

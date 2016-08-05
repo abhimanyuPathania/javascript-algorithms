@@ -1,0 +1,37 @@
+
+<div class="ko-select-list" data-bind="
+	click: toggleDropdown,
+	clickBubble: false,
+	css: {
+		open: dropdownOpen,
+		'ko-select-list-fix-padding-bottom': selectedOptions().length > 0
+	}
+	">
+
+	<span class="ko-select-list-placeholder" data-bind ="
+		visible: !selectedOptions().length">
+		Select sorting algorithms
+	</span>
+	<i class="material-icons dropdown-notch">arrow_drop_down</i>
+	<!-- ko foreach: selectedOptions -->
+		<div class="ko-select-list-selected-item" data-bind="">
+			<span data-bind="text: $parent.getListText($data)"></span>
+			<i class="material-icons" data-bind="
+				click: $parent.removeItem,
+				clickBubble: false">
+				close
+			</i>
+		</div>
+	<!-- /ko -->
+
+	<div class="ko-select-list-options">
+		<!-- ko foreach: options -->
+	        <div class="ko-select-list-option-item" data-bind="
+	        	text: $parent.getListText($data),
+	        	click: $parent.addItem,
+	        	clickBubble: false">
+	        </div>
+	    <!-- /ko -->
+	</div>
+
+</div>

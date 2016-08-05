@@ -1,0 +1,153 @@
+@mixin sub-menu-transition-close($time) {
+	/* fade out, then shrink */
+    transition: opacity $time,
+                font-size $time $time,
+                padding $time $time,
+                margin $time $time;
+   	transition-timing-function: ease-out;
+}
+
+@mixin sub-menu-transition-open($time) {
+ /* unshrink, then fade in */
+    transition: font-size $time,
+                padding $time,
+                margin $time,
+                opacity $time $time; // time delay
+    transition-timing-function: ease-out;
+}
+
+@mixin active-class{
+	border-right: 8px solid $javascript-logo-yellow;
+	transition-property: color, text-shadow, border-right;
+  	transition: $transition-duration-base ease-out;
+}
+
+#page-content {
+	float: right;
+	width: 100% - $menu-width-desktop;
+	padding-top: 40px;
+	padding-bottom: 40px;
+
+	h1{
+		margin-bottom: 30px;
+	}
+
+	h2{
+		margin-bottom: 20px;
+	}
+}
+
+
+#sidebar {
+	position: fixed;
+	float: left;
+	width: $menu-width-desktop;// 20%
+	height: 100%;
+	overflow: auto;
+}
+
+#header, #content{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#logo {
+	margin-bottom: 20px;
+
+	a {
+		display: block;
+		padding: 20px;
+	}
+}
+
+#sidebar .menu-item {
+
+	.sub-menu-dropdown {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.icon-heading .material-icons{
+		margin-right: 12px;
+	}
+
+	// make the whole link clickable
+	&> a,
+	.sub-menu-dropdown{
+		padding: 10px 20px;
+	}
+
+	&.active{
+		@include active-class;
+	}
+
+	.sub-menu-item {
+		
+		&.active{
+			@include active-class;
+		}
+
+		/* close dropdown */
+		a,
+		.material-icons {
+			font-size: 0;
+	    	opacity: 0;
+	   		padding: 0;
+	   		@include sub-menu-transition-close(100ms);
+		}
+
+		.material-icons{
+			margin-right: 4px;
+		}
+	}
+
+	// dropdown notch
+	.dropdown-notch{
+		transition: transform 100ms ease-out;
+	}
+}
+
+/* reveal dropdown */
+#sidebar .menu-item.open {
+	.sub-menu-item a {
+		padding: 10px 20px 10px 40px;
+		font-size: $font-size-base - 2px;
+		opacity: 1;
+	    @include sub-menu-transition-open(200ms);
+	}
+	
+	// separate "open" transition state for the material icons
+	// use the same transition but different target font-size value
+	.sub-menu-item .material-icons{
+		font-size: $font-size-icon-base;
+		opacity: 1;
+    	@include sub-menu-transition-open(200ms);
+	}
+
+	.dropdown-notch{
+		transform: rotate(180deg);
+		transition: transform 200ms ease-out;
+	}
+}
+
+
+.icon-heading {
+	display: flex;
+	align-items: center;
+}
+
+
+a.icon-heading{
+	cursor: pointer;
+}
+
+
+.clearfix:after{
+	content: " ";
+	display: block;
+	height: 0;
+	font-size: 0;
+	visibility: hidden;
+	clear: both;
+}

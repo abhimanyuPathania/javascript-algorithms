@@ -1,0 +1,85 @@
+@import "constants/all";
+
+@import "components/select_list";
+
+
+.sort-wrapper{
+
+	.sort-code{
+		margin: 30px 0px;
+	}
+
+	.sort-text{
+		margin-bottom: 20px;
+	}
+}
+
+#sorting-test-bench-wrapper{
+	margin-top: 30px;
+
+	p {
+		margin-bottom: 10px;
+	}
+}
+
+#sorting-test-bench{
+	margin-top: 30px;
+
+	#sorting-test-bench-inputs {
+		width: 50%;
+		float: left;
+		padding: 0px 20px;
+
+		input[type=text]{
+			width: 100%;
+		}
+	}
+
+	#sorting-test-bench-results{
+		width: 50%;
+		float: right;
+		padding: 0px 20px;
+	}
+
+}
+
+
+// too specific when inside #sorting-test-bench-inputs
+.sorting-test-bench-input-field {
+	margin-bottom: 20px;
+}
+
+
+
+#sorting-test-bench-controls {
+	margin-top: 40px;
+	margin-bottom: 0px;
+	text-align: right;
+
+	button {
+		margin-left: 12px;
+	}
+}
+
+#sorting-test-bench-error{
+	color: $highlight-error-red;
+	border: 1px solid $highlight-error-red;
+	background-color: lighten($highlight-error-red, 20%);
+	
+	font-size: 14px;
+	text-align: center;
+	
+	padding: 12px;
+	margin-bottom: 0px;
+	margin-top: 20px;
+
+	display: none;
+	&.show {
+		display: block;
+  		animation-name: expandIn;
+  		animation-duration: $transition-duration-fast;
+	}
+}
+
+
+

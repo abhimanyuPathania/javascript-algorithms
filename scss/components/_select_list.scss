@@ -1,0 +1,135 @@
+
+$ko-select-list-selected-item-spacing: 5px;
+
+
+.ko-select-list {
+	position: relative;
+	width: 100%;
+	height: $input-text-height;
+	border: 1px solid $border-color-input;
+	cursor: pointer;
+	user-select: none;
+
+	/* Acts as margin-left for the ".ko-select-list-selected-item" element adjacent to
+	   the left border of ".ko-select-list" */
+	padding-left: $ko-select-list-selected-item-spacing;
+
+	/* The dropdown notch is 29px(24px(font-size) + 5px(padding-right)).  
+		Adding another 5px gives us 34px to clear any ".ko-select-list-selected-item"
+		from going underneath the notch. Also; every selected-item, being greater than
+		34px clears the edge case for preceeding rows where the notch is not the concern.*/
+	padding-right: 24px + 2 * $ko-select-list-selected-item-spacing;
+	// padding-bottom: $ko-select-list-selected-item-spacing;
+
+	//@include apply-transition(border-color, $transition-duration-fast, ease);
+	
+	.ko-select-list-placeholder{
+		color: $border-color-input;
+
+		/* 5px(padding-left on ".ko-select-list") + 7px gives 12px which the same
+			padding-left for input[type=text]*/
+		margin-left: $padding-left-input-text - $ko-select-list-selected-item-spacing; // 7px
+
+		/* same as height of select-list to center it vertically */
+		line-height: $input-text-height;
+	}
+
+	.dropdown-notch{
+		position: absolute;
+		right: $ko-select-list-selected-item-spacing;
+		top: $ko-select-list-selected-item-spacing;
+
+		@include apply-transition(transform, $transition-duration-fast, ease);
+	}
+
+
+	&.open{
+		border-color: $javascript-logo-yellow;
+		border-bottom: 0px;
+
+		.dropdown-notch{
+			transform: rotate(180deg);
+		}
+
+		.ko-select-list-options{
+			border-top: 0px;
+
+			opacity: 1;
+			transform: scaleY(1);
+		}
+	}
+
+
+	&.ko-select-list-fix-padding-bottom{
+		// This class is only applied when user has selected atleast one item(default)
+		// The padding is removed when the "placeholder text" is visible so the
+		// select-list matches input[text] height.
+		padding-bottom: $ko-select-list-selected-item-spacing;
+
+		// setting height to auto lets browser increase it as user selects more items
+		height: auto;
+	}
+}
+
+.ko-select-list-options{
+	position: absolute;
+	top: 100%;
+	left: -1px;
+	width: calc(100% + 2px);
+	max-height: 150px;
+	overflow: auto;
+	
+	background-color: $background-color-page-content-grey;
+	border: 1px solid $javascript-logo-yellow;
+
+	opacity: 0;
+	transform: scaleY(0);
+	@include apply-transition((opacity, transform), $transition-duration-fast, ease-out)
+	transform-origin: top;
+
+	.ko-select-list-option-item {
+		padding: 10px $padding-left-input-text;
+		font-size: 14px;
+		border-top: 1px solid $border-color-very-light-grey;
+
+		&:hover{
+			background-color: $border-color-very-light-grey;
+		}
+	}
+}
+
+.ko-select-list-selected-item{
+	display: inline-flex;
+	align-items: center;
+
+	font-weight: $font-weight-bold;
+
+	background-color: $button-bgc;
+	padding: 2px 8px;
+
+	border: 1px solid $border-color-input;
+	margin-top: $ko-select-list-selected-item-spacing;
+
+	/* The 5px padding on .ko-select-list div acts as margin-left for the first
+	".ko-select-list-selected-item". Margin right consists of 1px + ~4px for the
+	"inline-flex" displayed elements. Adding to approx 5px;*/
+	margin-right: 1px;
+
+	animation-duration: $transition-duration-fast;
+  	animation-name: expandIn;
+	
+	span{
+		font-size: 12px;
+	}
+
+	i {
+		font-size: 18px;
+		margin-left: 8px;
+		color: lighten($font-color-main, 25%);
+		@include apply-transition(color, $transition-duration-fast, ease);
+
+		&:hover{
+			color: $font-color-main;
+		}
+	}
+}

@@ -1,0 +1,113 @@
+
+@mixin create-buttons{
+	@each $name, $style-map in $button-map{
+		$mxn-bgc: map-get($style-map, background-color);
+		$mxn-color: map-get($style-map, color);
+
+		.#{$name}{
+			background-color: $mxn-bgc;
+			color: $mxn-color;
+			&:hover,
+			&:focus{
+				background-color: darken($mxn-bgc, $button-bgc-darken-offset);
+			}
+
+			&:active{
+				background-color: darken($mxn-bgc, 2 * $button-bgc-darken-offset);
+			}
+
+			&:disabled{
+				//@include disabled-button;
+				background-color: $button-bgc-disabled;
+				color: lighten($font-color-main, 40%);
+			}
+		}
+
+		.icon-text-btn.#{$name}{
+			i {
+				background-color: darken($mxn-bgc, $button-icon-bgc-darken-offset);
+			}
+
+			&:hover i,
+			&:focus i{
+				background-color: darken($mxn-bgc, $button-icon-bgc-darken-offset + $button-bgc-darken-offset);
+			}
+
+			&:active i{
+				background-color: darken($mxn-bgc, $button-icon-bgc-darken-offset + (2 * $button-bgc-darken-offset));
+			}
+
+			&:disabled i{
+				//@include disabled-button($icon-btn:true);
+				background-color: darken($button-bgc-disabled, $button-icon-bgc-darken-offset - 3%);
+				color: lighten($font-color-main, 40%);
+			}
+		}
+	}
+}
+
+
+
+::-webkit-input-placeholder,
+:-moz-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder {
+   color: $border-color-input;
+}
+
+
+input[type=text]{
+	min-height: 36px;
+	padding: 0px $padding-left-input-text;
+	border: 1px solid $border-color-input;
+
+	//transition-property: box-shadow, border-color;
+	//transition: 150ms ease-out;
+	//@include apply-transition(border-color, $transition-duration-fast, ease);
+
+	&:focus{
+		border-color: $javascript-logo-yellow;
+	}
+}
+
+
+button{
+	font-weight: $font-weight-bold;
+	font-size: 14px;
+	text-transform: uppercase;
+	height: $button-height;
+	min-width: $button-width;
+	@include apply-transition((color, background-color),
+								$transition-duration-base, ease);
+}
+
+
+
+.icon-text-btn{
+	min-width: $button-width + 40px;
+	
+	// Extra span element since flexbox on <button> elements
+	// does not work in firefox.
+	.firefox-wrapper{
+			display: flex;
+			align-items: center;
+
+			span{
+				flex: 1 1 auto; //make it occupy rest space
+			}
+
+		i{
+			font-size: 16px;
+			padding: 0px 12px;;
+			height:$button-height;
+			display: inline-flex;
+			align-items: center;
+			@include apply-transition((color, background-color),
+								$transition-duration-base, ease);
+		}
+	}
+}
+
+
+
+@include create-buttons;
