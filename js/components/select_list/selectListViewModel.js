@@ -49,10 +49,7 @@ define([
 			self.selectedOptions.push(data);
 		};
 
-		self.getListText = function getListText(s){
-			var sortType = s.substring(0, s.indexOf("Sort"));
-			return sortType[0].toUpperCase() + sortType.slice(1) + " Sort";
-		};
+		self.getListText = helper.getSortText;
 
 		// =================================================================== //
 

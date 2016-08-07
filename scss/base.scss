@@ -34,5 +34,12 @@ pre[class*="language-"] {
 }
 
 
+.spinner-icon {
+	animation-name: spin;
+	animation-duration: 800ms;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
 
 

@@ -314,35 +314,61 @@ require({
 	// is wrapper in "runSortCode" function
 	function runSortCode(){
 		var sortedArray;
+		var timesArray = [];
 		var randomArray = helper.getRandomArray(data.arraySize);
 
 		// send "randomArray" built to main thread for UI
-		postMessage({
-			"cmd": "randomArray",
-			"value": randomArray
-		});
+		// postMessage({
+		// 	cmd: "randomArray",
+		// 	value: randomArray
+		// });
 
 		data.sortTypes.forEach(function(sort){
+			var sortText = helper.getSortText(sort);
+			
+			postMessage({
+				cmd: "currentSortStatus",
+				value: sortText
+			});
+
 			var start;
-			var timeTaken;
+			var time;
 			var arrayCopy = randomArray.slice();
 
 			start = Date.now();
 			sortedArray = sortCode[sort](arrayCopy);
-			timeTaken = Date.now() - start;
+			time = Date.now() - start;
+
+			timesArray.push(time);
+			// This value object is directly used to render result views
+			// using testBenchResults obsArr of the sortingVM
 			postMessage({
-				"cmd": "result",
-				"value": {
-					"sortType": sort,
-					"timeTaken": timeTaken
+				cmd: "result",
+				value: {
+					sortType: sort,
+					sortText: sortText,
+					time: time,
+					timeText: time + " ms",
+					width: "0%",
+					fastest: false,
+					slowest: false
 				}
 			});
 		});
 
 		// Send "sortedArray" for  UI
+		// postMessage({
+		// 	cmd: "sortedArray",
+		// 	value: sortedArray
+		// });
+
+		// Send "sortedArray" for  UI
 		postMessage({
-			"cmd": "sortedArray",
-			"value": sortedArray
+			cmd: "complete",
+			value: {
+				max: Math.max.apply(null, timesArray),
+				min: Math.min.apply(null, timesArray)
+			}
 		});
 	}
 });

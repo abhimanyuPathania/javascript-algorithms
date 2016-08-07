@@ -3,6 +3,8 @@
 @import "components/select_list";
 
 
+$sorting-test-bench-bar-height: 24px;
+
 .sort-wrapper{
 
 	.sort-code{
@@ -81,5 +83,105 @@
 	}
 }
 
+#sorting-test-bench-status{	
+	display: flex;
+	align-items: center;
+	height: 0px;
+	opacity: 0;
+	margin-bottom: 0px;
+	overflow: hidden;
 
+	@include apply-transition((opacity, height, margin), $transition-duration-base, ease);
 
+	&.show{
+		height: 36px;
+		opacity: 1;
+		margin-bottom: 20px;
+	}
+	.sorting-test-bench-status-text{
+		margin-left: 8px;
+		font-weight: $font-weight-bold;
+	}
+	
+	i {
+		color: $javascript-logo-yellow;
+		font-size: 36px;
+		margin-right: 16px;
+	}	
+
+}
+
+.sort-stat{
+	margin-bottom: 15px;
+	font-size: 14px;
+	
+	&.fastest{
+
+		.sort-stat-text{
+			font-weight: $font-weight-bold;
+			color: $javascript-logo-yellow;
+		}
+
+		.sort-stat-time-text {
+			color: #FFF;
+			background-color: $javascript-logo-yellow;
+		}
+
+		.sort-stat-bar{
+			background-color: $javascript-logo-yellow;
+		}
+	}
+
+	&.slowest{
+		.sort-stat-text{
+			color: $highlight-error-red;
+		}
+		.sort-stat-time-text {
+			color: $highlight-error-red;
+			background-color: lighten($highlight-error-red, 20%);
+		}
+		.sort-stat-bar{
+			background-color: lighten($highlight-error-red, 20%);
+		}
+	}
+}
+
+.sort-stat-text{
+	margin-bottom: 5px;
+}
+
+.sort-stat-time {
+	display: flex;
+	align-items: center;
+}
+
+.sort-stat-time-text{
+
+	font-size: 12px;
+	font-weight: $font-weight-bold;
+
+	background-color: $button-bgc;
+	margin-right: 4px;
+
+	width: 80px;
+	height: $sorting-test-bench-bar-height;
+	
+	// center the text content
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.sort-stat-bar-wrapper{
+	height: $sorting-test-bench-bar-height;
+
+	// make the wrapper occupy rest of entire width
+	flex: 1;
+}
+
+.sort-stat-bar{
+	height: 100%;
+	width: 0%;
+	background-color: $button-bgc;
+	@include apply-transition(width, 500ms, ease);
+}

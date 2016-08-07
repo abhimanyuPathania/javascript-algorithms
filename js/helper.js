@@ -17,21 +17,6 @@ define([], function(){
 			return result;
 		},
 
-		toggleKoSelectList: function(target){
-
-			// If click is 'NOT' from/inside of, "ko-select-list-selected-item" spans
-			// or does NOT has "ko-select-list-option-item" class;toggle dropdown.
-			// Cannot use closest(".ko-select-list-options") since KO is removing
-			// the option-item from it.
-
-			if (!(target.hasClass("ko-select-list-option-item") ||
-				target.closest(".ko-select-list-selected-item").length)){
-				return true;
-			}
-
-			return false;
-		},
-
 		closeKoSelectList: function(target){
 			// if user clicks outside the "ko-select-list" wrapper div;
 			// close all the open dropdowns
@@ -42,6 +27,23 @@ define([], function(){
 				return true;
 			}
 			return false;
+		},
+
+		getSortText: function (s){
+			// bubbleSort -> Bubble Sort
+
+			if (!s){
+				return null;
+			}
+			
+			var sortType = s.substring(0, s.indexOf("Sort"));
+			return sortType[0].toUpperCase() + sortType.slice(1) + " Sort";
+		},
+
+
+		// http://stackoverflow.com/a/10835227/2426469
+		isPositiveInteger: function(n){
+			return n >>> 0 === parseFloat(n);
 		}
 	};
 });

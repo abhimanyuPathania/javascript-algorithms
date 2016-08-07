@@ -11,7 +11,7 @@
 
 
 {% block scripts %}	
-	<script data-main="../js/sortingMain"  src="../js/lib/require.js"></script>
+	<script data-main="../dist/js/sortingMain"  src="../dist/js/lib/require.js"></script>
 {% endblock %}
 
 {% block header %}
@@ -198,16 +198,18 @@ function insertionSort(arr){
 
 				<div id="sorting-test-bench-controls" class="sorting-test-bench-input-field">
 
-					<button type="button" class="icon-text-btn btn-grey" data-bind="click: stopTestBench,
-													 				disable: enableRunButton">
+					<button type="button" class="icon-text-btn btn-grey" 
+						data-bind="click: stopTestBench,
+								disable: enableRunButton">
 						<span class="firefox-wrapper">
 							<i class="material-icons">pan_tool</i>
 							<span>stop</span>
 						</span>
 					</button>
 
-					<button type="button" class="icon-text-btn btn-yellow" data-bind="click: runTestBench,
-													 enable: webWorkerSynced && enableRunButton">
+					<button type="button" class="icon-text-btn btn-yellow"
+						data-bind="click: runTestBench,
+								enable: webWorkerSynced && enableRunButton">
 						<span class="firefox-wrapper">
 							<i class="material-icons">send</i>
 							<span>run</span>
@@ -216,16 +218,40 @@ function insertionSort(arr){
 
 				</div><!-- sorting-test-bench-input-field -->
 
-				<div id="sorting-test-bench-error" class="sorting-test-bench-input-field">
-					<span>Please enter a valid value for array size.</span>
+				<div id="sorting-test-bench-error" class="sorting-test-bench-input-field"
+					data-bind="css:{show: showTestBenchError}">
+					<span data-bind="text: testBenchError"></span>
 				</div><!-- sorting-test-bench-input-field -->
 
 			</div><!-- sorting-test-bench-inputs -->
 
-			<div id="sorting-test-bench-results">
-				<p>RESULTS!!</p>
-			</div>
+			<div id="sorting-test-bench-results" >
+				<div id="sorting-test-bench-status" data-bind="
+					css:{show: showTestBenchStatus}">
+					<i class="material-icons spinner-icon">hdr_weak</i>
+					<span>Running</span>
+					<span class="sorting-test-bench-status-text" data-bind="
+						text: currentWebWorkerSort">
+					</span>
+				</div>
 
-		</div><!-- sorting-test-bench -->
-	</div><!-- sorting-test-bench-wrapper -->
+				<div id="sorting-test-bench-statistics" data-bind="
+					foreach: {data: testBenchResults, afterRender: animateSortBar}">
+					<div class="sort-stat" data-bind="css: {fastest: fastest, slowest:slowest}">
+						<div class="sort-stat-text">
+							<span data-bind="text: sortText"></span>						
+						</div>
+						<div class="sort-stat-time">
+							<span class="sort-stat-time-text" data-bind="text: timeText"></span>
+							<div class="sort-stat-bar-wrapper">
+								<div class="sort-stat-bar" ></div>
+							</div>
+						</div>						
+					</div><!-- sort-stat -->
+					
+				</div> <!-- sorting-test-bench-statistics -->
+			</div> <!-- sorting-test-bench-results -->
+
+		</div> <!-- sorting-test-bench -->
+	</div> <!-- sorting-test-bench-wrapper -->
 {% endblock %}
