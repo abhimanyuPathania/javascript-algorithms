@@ -85,7 +85,8 @@ define([
 				menuItemHref = pathname + hash;
 			}
 
-			// special case to handle "/sorting" URL
+			// special case to handle "/sorting" URL which
+			// sammy routes to /sorting#bubblesort
 			if(!hash && pathname === "/sorting"){
 				menuItemHref = "/sorting#bubblesort";
 			}
@@ -116,19 +117,21 @@ define([
 				}
 			});
 
+			// no initial classes on menuItems for index page
+			if (pathname !== "/"){
+				if(submenuPresent) {
+					//add the active class to sub-menu-item
+					urlMapper[menuItemHref].subItem.active(true);
 
-			if(submenuPresent) {
-				//add the active class to sub-menu-item
-				urlMapper[menuItemHref].subItem.active(true);
-
-				//open the menu-item dropdown menu
-				urlMapper[menuItemHref].item.open(true);
-			} else {
-				// if the is no submenu; 
-				// add the active class to menu-item
-				urlMapper[menuItemHref].active(true);
+					//open the menu-item dropdown menu
+					urlMapper[menuItemHref].item.open(true);
+				} else {
+					// if the is no submenu; 
+					// add the active class to menu-item
+					urlMapper[menuItemHref].active(true);
+				}
 			}
-			
+	
 			// add aditional handler for "sorting" page's internal routing
 			if(pathname.indexOf("/sorting") !== -1){
 				parentRef.currentSort.subscribe(self.handleSortingPageSidebar);
