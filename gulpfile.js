@@ -12,6 +12,10 @@ var stylesSassObj = {
 
 gulp.task("default", function(){
 	gulp.watch("scss/**/*.scss", ["styles"]);
+
+	// watch for changes in JS files or the KO template files and copy
+	// both in dist directory
+	gulp.watch(["js/**/*.js", "js/**/*.html"], ["watchJs", "copyKnockoutTemplates"]);
 });
 
 //this task is watched by gulp watcher. Only spits out plain CSS.
@@ -19,6 +23,12 @@ gulp.task("styles", function(){
 	return gulp.src("scss/**/*.scss")
 		.pipe(sass(stylesSassObj).on("error", sass.logError))
 		.pipe(gulp.dest("dist/css"));
+});
+
+// this is the gulp watcher for JS files. Copy everything to dist directory.
+gulp.task("watchJs", function() {
+	return gulp.src(["js/**/*.js"])
+		.pipe(gulp.dest("dist/js"));
 });
 
 

@@ -215,12 +215,16 @@ function(ko, $, Sammy, helper) {
 
 			self.myWebWorker.onmessage = function(e){
 
+				// if(e.data.cmd === "randomArray" || e.data.cmd === "sortedArray"){
+				// 	console.log(e.data.value);
+				// }
+
+
 				if(e.data.cmd === "currentSortStatus"){
 					self.currentWebWorkerSort(e.data.value);
 				}
 
 				if(e.data.cmd === "result"){
-					//console.log(e.data.value.sortType, ":", e.data.value.timeText);
 					self.testBenchResults.push(e.data.value);
 				}
 

@@ -5,16 +5,33 @@
 
 $sorting-test-bench-bar-height: 24px;
 
-.sort-wrapper{
 
-	.sort-code{
-		margin: 30px 0px;
+
+.sort-code{
+	margin: 30px 0px;
+}
+
+.sort-text {
+	margin: 20px 0px;
+
+	p {
+		margin-bottom: 10px;
+
+		&:last-of-type{
+			margin-bottom: 0px;
+		}
 	}
 
-	.sort-text{
-		margin-bottom: 20px;
+	a {
+		color: $javascript-logo-yellow;
+
+		&:hover{
+			border-bottom: 1px solid;
+		}
 	}
 }
+
+
 
 #sorting-test-bench-wrapper{
 	margin-top: 30px;
@@ -184,4 +201,13 @@ $sorting-test-bench-bar-height: 24px;
 	width: 0%;
 	background-color: $button-bgc;
 	@include apply-transition(width, 500ms, ease);
+}
+
+
+#quicksort-pivot-repersentation{
+	display: flex;
+	justify-content: center;
+	span {
+		margin-right: 12px;
+	}
 }

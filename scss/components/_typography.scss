@@ -1,5 +1,5 @@
 
-// @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600);
 
 @font-face {
   font-family: 'Material Icons';
@@ -63,6 +63,10 @@ strong {
 	font-weight: $font-weight-bold;
 }
 
+em {
+	font-style: italic;
+}
+
 #logo {
 	background-color: $javascript-logo-yellow;
 	color: $sidebar-dark-purple;
@@ -108,12 +112,17 @@ strong {
 
 #header h1{
 
-	font-size: $font-size-page-heading;
+	font-size: $font-size-page-heading-h1;
 	font-weight: $font-weight-light;
 }
 
 #content h2{
-	font-size: $font-size-page-subheading;
+	font-size: $font-size-page-subheading-h2;
+}
+
+#content h3{
+	font-size: $font-size-page-subheading-h3;
+	font-weight: $font-weight-bold;
 }
 
 p{

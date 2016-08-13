@@ -18,7 +18,8 @@
 	<h1>Sorting</h1>
 {% endblock %}
 
-{% block content %}	
+{% block content %}
+
 	<div id="sort">
 		
 		<div class="sort-wrapper" data-bind="visible:displaySort.bubbleSort">
@@ -62,7 +63,7 @@ function bubbleSort(arr) {
 
 			<div class="sort-text">
 				<p>
-					The idea is to keep swaping the biggest element up the array. Array gets sorted as bigger elements keep 'bubbling' up. The Bubble Sort is notoriously slow. Both the swap and comparison operations are propotional to <span class="box-highlight">O(N<sup>2</sup>)</span>.
+					The algorithm keeps swaping the biggest element to higher indices. Array gets sorted as bigger elements keep <em>bubbling</em> up. The Bubble Sort is notoriously slow. Both the swap and comparison operations are of the order of <span class="box-highlight">O(N<sup>2</sup>)</span>.
 				</p>
 			</div><!-- END SORT-TEXT -->
 		</div><!-- END SORT-WRAPPER -->
@@ -107,7 +108,7 @@ function selectionSort(arr) {
 
 			<div class="sort-text">
 				<p>
-					The Selection Sort finds the smallest element in every iteration and puts it in front of the array. It is a little better than the <a href="/sorting#bubblesort">Bubble Sort</a> since swaps are propotional to <span class="box-highlight">O(N)</span>. But the comparisons are still of the order of <span class="box-highlight">O(N<sup>2</sup>)</span>.
+					The Selection Sort finds the smallest element in every iteration and puts it in the front of the array. It runs bit faster than the <a href="/sorting#bubblesort">Bubble Sort</a> since swaps are propotional to <span class="box-highlight">O(N)</span>. But the comparisons are still of the order of <span class="box-highlight">O(N<sup>2</sup>)</span>, which dominate the operation as a whole.
 				</p>
 			</div><!-- END SORT-TEXT -->
 		</div><!-- END SORT-WRAPPER -->
@@ -127,12 +128,12 @@ function insertionSort(arr){
 	for (outer = 1; outer &lt; arr.length; outer += 1) {
 
 		// arr[0](single element) is assumed to be the sorted section of array.
-		// "temp" variable has the marker which is "inserted" at the correct position
-		// of the section of array assumed to be sorted.
+		// "temp" variable has the "marker" which is "inserted" at the correct position
+		// in the sorted section of the array.
 		temp = arr[outer];
 		inner = outer;
 
-		// while the marker is bigger than inner item
+		// while the marker is smaller than inner item
 		while(inner &gt; 0 &amp;&amp; arr[inner-1] &gt; temp) {
 
 			//keep shifting the inner items forward
@@ -149,25 +150,544 @@ function insertionSort(arr){
 
 			<div class="sort-text">
 				<p>
-					For insertion Sort we assume that the elements to the left of the marker element(starting from 2'nd element of the array) are already sorted and the marker is inserted in correct spot to the sorted section during each iteration.
-					</br>
-					It is faster than both Bubble and Selection sort but still runs at <span class="box-highlight">O(N<sup>2</sup>)</span>. But, if the data is almost sorted, insertion sort runs in almost O(N) time. 
+					Assume that the elements to the left of the marker element (2'nd element of the array being the first marker) are already sorted and the marker is <em>inserted</em> in correct spot in the sorted section during each iteration.
+				</p>
+
+				<p>
+					Insertion Sort runs faster than Bubble and Selection sort but still runs at <span class="box-highlight">O(N<sup>2</sup>)</span>. But, if the data is almost sorted, insertion sort runs in almost <span class="box-highlight">O(N)</span> time. 
 				</p>
 			</div><!-- END SORT-TEXT -->
 		</div><!-- END SORT-WRAPPER -->
 
-		<div data-bind="visible: displaySort.mergeSort">
-			<h4>Merge Sort</h4>
-		</div>
+		<div class="sort-wrapper" data-bind="visible:displaySort.mergeSort">
+			<h2>Merge Sort</h2>
+			<div class="sort-running-time">
+				<p>Running Time: <span class="box-highlight">O(N*logN)</span></p>
+			</div>
 
-		<div data-bind="visible: displaySort.shellSort">
-			<h4>Shell Sort</h4>
-		</div>
+			<h3>Merging two sorted arrays</h3>
+			<div class="sort-text">
+				<p>
+					The Merge Sort is built on the algoritm to merge two sorted arrays, into one  sorted array which contains elements from the both.
+
+					The following code shows how to merge two arrays, <span class="box-highlight">arrA</span> and <span class="box-highlight">arrB</span> into one sorted array.
+
+					Both, <span class="box-highlight">arrA</span> and <span class="box-highlight">arrB</span>, are assumed to be sorted. 
+				</p>
+			</div><!-- END SORT-TEXT -->
+
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function merge(arrA, arrB){
+	var temp = [];
+
+	// starting indices
+	var indexA = 0;
+	var indexB = 0;
+	var indexTemp = 0;
+
+	while(indexA &lt; arrA.length &amp;&amp; indexB &lt; arrB.length){
+	// compare elements from the arrA and arrB and copy the smaller into temp
+		if (arrA[indexA] &lt; arrB[indexB]){
+			temp[indexTemp] = arrA[indexA];
+			indexA += 1;
+		} else {
+			temp[indexTemp] = arrB[indexB];
+			indexB += 1;
+		}
+		indexTemp += 1;
+	}
+	
+	// at this point all the elements from atleast one of the arrays must have been
+	// copied into temp; while keeping the temp array sorted
+
+	// if arrA is larger than arrB, copy the rest of elements directly into temp
+	while(indexA &lt; arrA.length){
+		temp[indexTemp] = arrA[indexA];
+		indexA += 1;
+		indexTemp += 1;
+	}
+
+	// if arrB is larger than arrA, copy the rest of elements directly into temp
+	while(indexB &lt; arrB.length){
+		temp[indexTemp] = arrB[indexB];
+		indexB += 1;
+		indexTemp += 1;
+	}
+	return temp;
+}
+
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+			
+			<h3>Recursive Merge Sort</h3>
 		
-		<div data-bind="visible: displaySort.shellSort">
-			<h4>Quick Sort</h4>
-		</div>	
-	</div><!-- END SORT DIV-->
+			<div class="sort-text">
+				<p>
+					In Recursive Merge Sort, we divide the array into two halves. If these halves were sorted, they could be merged together to sort the array. Each half is again sorted by recursively calling the <span class="box-highlight">recursiveMergeSort</span> function with the related <span class="box-highlight">lowerBound</span> and <span class="box-highlight">upperBound</span> indices bounding the half.
+
+					The base case being that of array with single element which is already sorted. From this base case; the sorted array is built by <span class="box-highlight">merge</span> function calls.
+				</p>
+
+				<p>
+					For the very first call to <span class="box-highlight">recursiveMergeSort</span>, <span class="box-highlight">lowerBound</span> and <span class="box-highlight">upperBound</span> are passed as <span class="box-highlight">0</span> and <span class="box-highlight">theArr.length - 1</span> respectively.
+				</p>
+			</div><!-- END SORT-TEXT -->
+
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function recursiveMergeSort(theArr, lowerBound, upperBound){			
+	var mid;
+
+	// Array with single element is already sorted.
+	if (lowerBound === upperBound){
+		return;
+	}
+
+	mid = Math.floor((upperBound + lowerBound)/2);
+
+	// sort the lower half of the array
+	recursiveMergeSort(theArr, lowerBound, mid);
+
+	// sort the upper half of the array by calling itself
+	recursiveMergeSort(theArr, mid + 1, upperBound);
+	
+	// merge the two sorted half arrays into one, final sorted array
+	merge(theArr, lowerBound, mid, upperBound);
+}
+
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+			
+			<h3>Merge Sort</h3>
+			<div class="sort-text">
+				<p>
+					Complete code for the Merge Sort:
+				</p>
+			</div><!-- END SORT-TEXT -->
+
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function mergeSort(arr) {
+
+	recursiveMergeSort(0, arr.length - 1);
+	return arr;
+	
+	function recursiveMergeSort(lowerBound, upperBound){			
+		var mid;
+
+		// Array with single element is already sorted.
+		if (lowerBound === upperBound){
+			return;
+		}
+
+		mid = Math.floor((upperBound + lowerBound)/2);
+
+		// sort the lower half of the array by calling itself
+		recursiveMergeSort(lowerBound, mid);
+
+		// sort the upper half of the array by calling itself
+		recursiveMergeSort(mid + 1, upperBound);
+		
+		// merge the two sorted half arrays into one, final sorted array
+		merge(lowerBound, mid, upperBound);
+	}
+
+	function merge(lowerBound, mid, upperBound){
+		// Left Array arr[lower -&gt; mid]
+		// Righ Array arr[mid + 1 -&gt; upperBound]
+
+		var temp = [];  // Buffer array
+		var lower = lowerBound;
+		var upper = mid + 1;
+		var i = 0;
+		var totalLength = upperBound - lowerBound + 1;
+
+		while(lower &lt;= mid &amp;&amp; upper &lt;= upperBound){
+			if (arr[lower] &lt; arr[upper]){
+				temp[i] = arr[lower];
+				lower += 1;
+			} else {
+				temp[i] = arr[upper];
+				upper += 1;
+			}
+			i += 1;
+		}
+
+		// If Left Array has more elements than right; copy them directly.
+		while (lower &lt;= mid){
+			temp[i] = arr[lower];
+			i += 1;
+			lower += 1;
+		}
+
+		// If Right Array has more elements than left; copy them directly.
+		while(upper &lt;= upperBound){
+			temp[i] = arr[upper];
+			i += 1;
+			upper += 1;
+		}
+
+		// Copy the sorted section of arr from temp array to arr
+		for(i = 0; i &lt; totalLength; i += 1){
+			arr[lowerBound + i] = temp[i];
+		}
+	}
+}
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+		</div><!-- END SORT-WRAPPER -->
+
+		<div class="sort-wrapper" data-bind="visible:displaySort.shellSort">
+			<h2>Shell Sort</h2>
+			<div class="sort-running-time">
+				<p>Running Time: ~ From <span class="box-highlight">O(N<sup>3/2</sup>)</span> to <span class="box-highlight">O(N<sup>7/6</sup>)</span> 
+				</p>
+			</div>
+			
+			<div class="sort-text">
+				<p>
+					The Shell Sort improves upon the <a href="/sorting#insertionsort">Insertion Sort</a> which performs poorely when the array has smaller elements with higher indices. In this case each of those elements and all the intermediate elements must be moved many places to put them in correct positions.
+				</p>
+			</div>
+
+			<h3>H-Sorting</h3>
+			<div class="sort-text">
+				<p>
+					The Shell Sort improves this by shifting the smaller elements many spaces without shifting the intermediate elements. This is done by insertion sorting widely spaced sections of the array (h-sorting) and incrementally decreasing the space between elements. The increment is repersented by the variable <span class="box-highlight">h</span>.
+				</p>
+
+				<p>
+					The <span class="box-highlight">h</span> is finally reduced to <span class="box-highlight">1</span>; which is equivalent to running the normal <a href="/sorting#insertionsort">Insertion Sort</a> on the array. The difference being that the elements are already much closer to their final positions.  
+				</p>
+			</div>
+
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function shellSort(arr){
+	var inner;
+	var outer;
+	var temp;
+	var h = 1;
+
+	// calculate the first value of h to be used
+	while(h &lt;= arr.length/3){
+		h = 3*h + 1; // 1, 4, 13, 40, 121
+	}
+	
+	// Decrease h until h = 1;
+	while (h &gt; 0){ 
+		
+		// use Insertion Sort to "h-sort" the sections of array in passes.
+		// this implementation will generate following sections for first value(pass) of h:
+		// (0,h), (1, h+1), (2, h+2)...(0, h, 2h)...(0, h, 2h, 3h)
+		for (outer = h; outer &lt; arr.length; outer += 1){
+			temp = arr[outer];
+			inner = outer;
+
+			while (inner &gt;= h &amp;&amp; arr[inner - h] &gt;= temp){
+				arr[inner] = arr[inner - h];
+				inner = inner - h;
+			}
+			arr[inner] = temp;
+		}
+
+		// decrease h
+		// For h = 1, it will run like a normal Insertion Sort
+		// that would be the final pass of the Shell Sort
+		h = (h - 1)/3;
+	}
+	return arr;  
+}
+				</code></pre>
+			</div><!-- END SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					The efficiency of Shell Sort, when determined experimentally, ranges from <span class="box-highlight">O(N<sup>3/2</sup>)</span> down to <span class="box-highlight">O(N<sup>7/6</sup>)</span>. However, for most data, the upper estimate of <span class="box-highlight">O(N<sup>3/2</sup>)</span> holds.
+				</p>
+
+				<p>
+					Efficiency of the Shell Sort is also affected by the interval sequence used to generate the interval value <span class="box-highlight">h</span>. Here, the formula <span class="box-highlight">h = 3*h + 1</span> has been used but there are other as well. A general rule to generate the sequence is that that numbers should be relatively prime. This forces each pass to intermingle items sorted in previous pass; thus moving elements closer to their final positions before the final pass.
+				</p>
+			</div><!-- SORT-TEXT -->
+		</div><!-- SORT-WRAPPER -->
+		
+		<div class="sort-wrapper" data-bind="visible:displaySort.quickSort">
+			<h2>Quick Sort</h2>
+			<div class="sort-running-time">
+				<p>Running Time: <span class="box-highlight">O(N*logN)</span></p>
+			</div>
+
+			<h3>Partitioning</h3>
+			<div class="sort-text">
+				<p>
+					Partitioning is the underlying mechanism of the Quick Sort. To partition a data is to divide it into two groups. One group contains all items with values higher than a <strong>key</strong> value, while the other contains items with values less than the <strong>key</strong> value.
+				</p>
+				<p>
+					The following function <span class="box-highlight">partitioner</span>, partitions the section of an array, <span class="box-highlight">arr</span>, using <span class="box-highlight">pivot</span> as the key
+				</p>
+			</div><!-- END SORT-TEXT -->
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function partitioner(left, right, pivot){
+	
+	// adjusting for the pre-increment and pre-decrement operators
+	var leftIndex = left - 1;
+	var rightIndex = right + 1; 
+
+	while(true){
+		
+		// look for item smaller than pivot
+		while(arr[++leftIndex] &lt; pivot &amp;&amp; leftIndex &lt; right);
+
+		// look for an item larger than than pivot value
+		while(arr[--rightIndex] &gt; pivot &amp;&amp; rightIndex &gt; left);
+		
+		// when the pointers cross each other, the partitioning is done
+		if(leftIndex &gt;= rightIndex){
+			break;
+		}else{
+			// swap elements to the correct sides of the partition
+			swap(leftIndex, rightIndex);
+		}
+	}
+
+	// return the partition 
+	// here the leftIndex ends at the partitioning index
+	return leftIndex;
+}
+				</code></pre>
+			</div><!-- SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					<span class="box-highlight">partitioner</span> not only divides the array into two groups but also returns the position of the partition or where the pivot should be. If we put the pivot at the index returned by <span class="box-highlight">partitioner</span>, it should put the pivot in the correct position if the array had been sorted. This is the core logic behind the Quick Sort.
+				</p>
+
+				<p id="quicksort-pivot-repersentation">
+					<span class="box-highlight"> less than pivot</span> <span class="box-highlight">pivot</span> <span class="box-highlight"> greater than pivot</span>
+				</p>
+			</div><!-- SORT-TEXT -->
+			
+			<h3>Recursive Quick Sort</h3>
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function recursiveQuicksort(left, right){
+	var pivot;
+	var partition;
+
+	var size = right - left + 1;
+
+	// use insertion sort directly for arrays/partitions smaller than 10 elements
+	if (size &lt; 10){
+		insertionSort(left, right);
+	} else{
+
+		// select the pivot using the 'median of three' method
+		pivot = medianOfThree(left, right);
+
+		// partition the array using the pivot
+		partition = partitioner(left, right, pivot);
+
+		// call itself recursively to sort array to the left/right of partition
+		recursiveQuicksort(left, partition - 1);
+		recursiveQuicksort(partition + 1, right);
+	}
+}
+				</code></pre>
+			</div><!-- SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					The above implementation of Quicksort adds some additional adjustments to the core partitioning logic. Arrays or the sections/partitions of the array having less than 10 elements are sorted directly using the <a href="/sorting#insertionsort">Insertion Sort</a>. This is faster than partitioning very small arrays.
+				</p>
+				<p>
+					
+					Also, rather than picking last element of array as pivot, the implementation uses median of three elements to pick the pivot.
+				</p>
+			</div><!-- SORT-TEXT -->
+
+			<h3>Median Of Three Partitioning</h3>
+			<div class="sort-text">
+				<p>
+					Partitioning described above works worst when the smallest or largest element of the array is picked as pivot. So in order to avoid the worst case scenerio, the pivot is picked by taking the median first, last and middle element of the array.
+				</p>
+			</div><!-- SORT-TEXT -->
+
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function medianOfThree(left, right){
+	var mid = Math.floor((left + right)/2);
+
+	if(arr[left] &gt; arr[mid]){
+		swap(left, mid);
+	}
+
+	if(arr[left] &gt; arr[right]){
+		swap(left, right);
+	}
+
+	if(arr[mid] &gt; arr[right]){
+		swap(mid, right);
+	}
+
+	// Now the left, mid, right are in sorted order.
+
+	// Choose arr[mid] as pivot and put it on (right - 1)
+	// element. Since we're sure that right is already on
+	// the correct side of pivot's partition.
+	swap(mid, right - 1);
+
+	// return pivot
+	return arr[right - 1];
+}
+		</code></pre>
+			</div><!-- SORT-CODE -->
+
+			<div class="sort-text">
+				<p>
+					Beside picking the pivot efficiently, this approach also pre-sorts the <strong>left</strong>, <strong>right</strong> and <strong>pivot</strong> elements. So we can remove the <span class="box-highlight">leftIndex &lt; right</span> and <span class="box-highlight">rightIndex &gt; left</span> tests from the two while loops the the <span class="box-highlight">partitioner</span> function.
+				</p>
+			</div>
+
+			<h3>Quick Sort</h3>
+			<div class="sort-text">
+				<p>
+					The complete Quick Sort code including all the helper functions is given below:
+				</p>
+			</div>
+
+			<div class="sort-code">
+				<pre><code class="language-javascript">
+function quickSort(arr){
+	
+	// call the inner recursiveQuicksort function with indexes bounding the
+	// the passed array
+	recursiveQuicksort(0, arr.length - 1);
+	return arr;
+
+
+	function recursiveQuicksort(left, right){
+		var pivot;
+		var partition;
+
+		var size = right - left + 1;
+
+		// use insertion sort directly for arrays/partitions smaller than 10 elements
+		if (size &lt; 10){
+			insertionSort(left, right);
+		} else{
+
+			// select the pivot using the 'median of three' method
+			pivot = medianOfThree(left, right);
+
+			// partition the array using the pivot
+			partition = partitioner(left, right, pivot);
+
+			// call itself recursively to sort array to the left/right of partition
+			recursiveQuicksort(left, partition - 1);
+			recursiveQuicksort(partition + 1, right);
+		}
+	}
+
+	function partitioner(left, right, pivot){
+
+		// Pre-incremented to right of first element.
+		// Since it is known that left element is already less than the pivot
+		// due to median selection
+		// the left element is already on the correct side of the partition
+		var leftIndex = left;
+
+		// The median selection also puts the pivot at the right - 1 position.
+		// Setting rightIndex to right - 1 along with the "--rightIndex" pre-decrement
+		// operator skips that element
+		var rightIndex = right - 1; 
+
+		while(true){
+
+			while(arr[++leftIndex] &lt; pivot);
+			while(arr[--rightIndex] &gt; pivot);
+
+			if(leftIndex &gt;= rightIndex){
+				break;
+			}else{
+				swap(leftIndex, rightIndex);
+			}
+		}
+		
+		// restore pivot
+
+		// leftIndex is the position, the pivot should be at
+		// right - 1 is the position where the median selection puts the
+		// pivot prior to partitioning
+
+		// This puts pivot in its correct position for the sorted array
+		swap(leftIndex, right - 1);
+		return leftIndex;
+	}
+
+	function medianOfThree(left, right){
+		var mid = Math.floor((left + right)/2);
+
+		if(arr[left] &gt; arr[mid]){
+			swap(left, mid);
+		}
+
+		if(arr[left] &gt; arr[right]){
+			swap(left, right);
+		}
+
+		if(arr[mid] &gt; arr[right]){
+			swap(mid, right);
+		}
+
+		// Now the left, mid, right are in sorted order.
+
+		// Choose arr[mid] as pivot and put it on (right - 1)
+		// element. Since we're sure that right is already on
+		// the correct side of pivot's partition.
+		swap(mid, right - 1);
+
+		// return pivot
+		return arr[right - 1];
+	}
+
+	function insertionSort(left, right){
+		var outer;
+		var inner;
+		var temp;
+
+		for (outer = left + 1; outer &lt;= right; outer += 1) {
+			// selec the marker
+			temp = arr[outer];
+			inner = outer;
+
+			// inner loops till left end of array
+			// while marker is bigger than inner item
+			while(inner &gt; left &amp;&amp; arr[inner-1] &gt;= temp) {
+
+				//keep shifting the inner items forward
+				arr[inner] = arr[inner-1];
+				inner -= 1;
+			}
+
+			// out the marker in corect spot
+			arr[inner] = temp;
+		}
+	}
+
+	function swap(index1, index2){
+		var temp = arr[index1];
+		arr[index1] = arr[index2];
+		arr[index2] = temp;
+	}
+}
+				</code></pre>
+			</div>
+		</div><!-- SORT-WRAPPER -->
+
+	</div><!-- SORT DIV-->
 
 	<div id="sorting-test-bench-wrapper">
 		<h2>Test Bench</h2>

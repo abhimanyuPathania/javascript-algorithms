@@ -3,8 +3,9 @@
 define([
 	"knockout",
 	"jquery",
+	"data/sidebarData",
 	"lib/text!components/sidebar/sidebarTemplate.html"
-], function(ko, $, htmlString){
+], function(ko, $, sidebarMenuItems, htmlString){
 
 	function SidebarViewModel(params){
 		var self = this;
@@ -49,45 +50,7 @@ define([
 		// since submenus can never be in active state. Those observables always 
 		// remain false and are present because of the inablility to conditionally use
 		// the "css binding".
-		self.menuItems = [
-			{
-				text: "Sorting",
-				icon: "sort",
-				subMenu: true,
-				open: ko.observable(false),
-				active: ko.observable(false),
-
-				subMenuItems: [
-					{
-						text: "Bubble Sort",
-						icon: self.subItemIcon,
-						href: "/sorting#bubblesort",
-						active: ko.observable(false)
-					},
-
-					{
-						text: "Insertion Sort",
-						icon: self.subItemIcon,
-						href: "/sorting#insertionsort",
-						active: ko.observable(false)
-					},
-
-					{
-						text: "Selection Sort",
-						icon: self.subItemIcon,
-						href: "/sorting#selectionsort",
-						active: ko.observable(false)
-					}
-				]
-			},
-			{
-				text: "Some Other Menu Item",
-				icon: "sort",
-				subMenu: false,
-				href: "/",
-				active: ko.observable(false)
-			}
-		];
+		self.menuItems = sidebarMenuItems;
 
 		self.handleSortingPageSidebar = function(){
 			// this function is only handles the sidebar for the "/sorting" page

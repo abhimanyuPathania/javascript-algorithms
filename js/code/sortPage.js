@@ -75,27 +75,26 @@ var sortCode = {
 		return arr;
 	},
 
-	mergeSort: (function(){
+	mergeSort: function(arr){
 
-		// This closure variable servers as a temporary array to/from
-		// which sorted elements are copied. 
-		var temp = [];
+		recursiveMergeSort(0, arr.length - 1);
+		return arr;
 
-		function merge(theArr, lowerBound, mid, upperBound){
-			// Left Array theArr[lower -> mid]
-			// Righ Array theArr[mid + 1 -> upperBound]
-
+		function merge(lowerBound, mid, upperBound){
+			// Left Array arr[lower -> mid]
+			// Righ Array arr[mid + 1 -> upperBound]
+			var temp = [];
 			var lower = lowerBound;
 			var upper = mid + 1;
 			var i = 0;
 			var totalLength = upperBound - lowerBound + 1;
 
 			while(lower <= mid && upper <= upperBound){
-				if (theArr[lower] < theArr[upper]){
-					temp[i] = theArr[lower];
+				if (arr[lower] < arr[upper]){
+					temp[i] = arr[lower];
 					lower += 1;
 				} else {
-					temp[i] = theArr[upper];
+					temp[i] = arr[upper];
 					upper += 1;
 				}
 				i += 1;
@@ -103,25 +102,25 @@ var sortCode = {
 
 			// If Left Array has more elements than right; copy them directly.
 			while (lower <= mid){
-				temp[i] = theArr[lower];
+				temp[i] = arr[lower];
 				i += 1;
 				lower += 1;
 			}
 
 			// If Right Array has more elements than left; copy them directly.
 			while(upper <= upperBound){
-				temp[i] = theArr[upper];
+				temp[i] = arr[upper];
 				i += 1;
 				upper += 1;
 			}
 
-			// Copy the sorted section of theArr from temp array to theArray
+			// Copy the sorted section of arr from temp array to arr
 			for(i = 0; i < totalLength; i += 1){
-				theArr[lowerBound + i] = temp[i];
+				arr[lowerBound + i] = temp[i];
 			}
 		}
 
-		function recursiveMergeSort(theArr, lowerBound, upperBound){			
+		function recursiveMergeSort(lowerBound, upperBound){			
 			var mid;
 
 			// Array with single element is already sorted.
@@ -130,25 +129,12 @@ var sortCode = {
 			}
 
 			mid = Math.floor((upperBound + lowerBound)/2);
-			recursiveMergeSort(theArr, lowerBound, mid);
-			recursiveMergeSort(theArr, mid + 1, upperBound);
+			recursiveMergeSort(lowerBound, mid);
+			recursiveMergeSort(mid + 1, upperBound);
 
-			merge(theArr, lowerBound, mid, upperBound);
+			merge(lowerBound, mid, upperBound);
 		}
-
-		// This wrapper function is returned by the IIFE closure.
-		// "mergeSortWrapper" takes the unsorted array as input and
-		// calls the "recursiveMergeSort" function with correct arguments.
-		// The closure scoping covers both "merge" and "recursiveMergeSort"
-		// functions.
-
-		// Wrapper is required to match the calling styles of other sorts.
-		// It also returns the sorted arr.
-		return function mergeSortWrapper(arr){
-			recursiveMergeSort(arr, 0, arr.length - 1);
-			return arr;
-		};
-	})(),
+	},
 
 	shellSort: function(arr){
 		var inner;

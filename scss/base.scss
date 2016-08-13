@@ -5,7 +5,7 @@
 @import "vendor/prism";
 
 .box-highlight{
-	padding: 5px 10px;
+	padding: 4px 10px;
 	background-color: #f1f1f1;
 	border-radius: 5px;
 	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
@@ -23,8 +23,8 @@ pre[class*="language-"]{
 	border-top-right-radius: 8px;
 	border-bottom-right-radius: 8px;
 
-	max-width: 80%;
-	margin: 0px auto;
+/* 	max-width: 80%;
+	margin: 0px auto; */
 }
 
 // add the hexa background to code blocks
