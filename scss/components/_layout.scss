@@ -16,11 +16,8 @@
     transition-timing-function: ease-out;
 }
 
-@mixin active-class{
-	border-right: 8px solid $javascript-logo-yellow;
-	transition-property: color, text-shadow, border-right;
-  	transition: $transition-duration-base ease-out;
-}
+
+$sidebar-dropdown-transition-time: 150ms;
 
 #page-content {
 	float: right;
@@ -86,13 +83,24 @@
 	}
 
 	&.active{
-		@include active-class;
+		border-right: 8px solid $javascript-logo-yellow;
+		@include apply-transition((color, text-shadow, border-right), 
+								$transition-duration-base, ease-out);
 	}
 
 	.sub-menu-item {
 		
 		&.active{
-			@include active-class;
+			// this is the transition for an active sub-menu-item; when the parent 
+			// menu-item is toggled.
+
+			// reduce the border-right to 0px; 
+			border-right: 0px solid $javascript-logo-yellow;
+			transition-property: color, text-shadow, border-right;
+
+			// match the border transition to the one of fading out sub-menu-items for the
+			// closing dropdown
+  			transition-duration: $transition-duration-base, $transition-duration-base, $sidebar-dropdown-transition-time;
 		}
 
 		/* close dropdown */
@@ -101,7 +109,7 @@
 			font-size: 0;
 	    	opacity: 0;
 	   		padding: 0;
-	   		@include sub-menu-transition-close(100ms);
+	   		@include sub-menu-transition-close($sidebar-dropdown-transition-time);
 		}
 
 		.material-icons{
@@ -111,17 +119,22 @@
 
 	// dropdown notch
 	.dropdown-notch{
-		transition: transform 100ms ease-out;
+		transition: transform $sidebar-dropdown-transition-time ease-out;
 	}
 }
 
 /* reveal dropdown */
 #sidebar .menu-item.open {
+
+	.sub-menu-item.active {
+		border-right: 8px solid $javascript-logo-yellow;
+	}
+
 	.sub-menu-item a {
 		padding: 10px 20px 10px 40px;
 		font-size: $font-size-base - 2px;
 		opacity: 1;
-	    @include sub-menu-transition-open(200ms);
+	    @include sub-menu-transition-open($sidebar-dropdown-transition-time);
 	}
 	
 	// separate "open" transition state for the material icons
@@ -129,12 +142,11 @@
 	.sub-menu-item .material-icons{
 		font-size: $font-size-icon-base;
 		opacity: 1;
-    	@include sub-menu-transition-open(200ms);
+    	@include sub-menu-transition-open($sidebar-dropdown-transition-time);
 	}
 
 	.dropdown-notch{
 		transform: rotate(180deg);
-		transition: transform 200ms ease-out;
 	}
 }
 
