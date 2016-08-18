@@ -6,5 +6,10 @@ define( ["knockout","jquery"], function(ko, $) {
 
 		var self = this;
 		self.parentRef = self;
+
+		// Detect animationend event on header and fadeIn content div
+		$("#header").on("animationend webkitAnimationEnd oAnimationEnd", function () {
+			$("#content").addClass("visible");
+		});
 	};
 });

@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block style_sheets %}
+	<link rel="stylesheet" href="../dist/css/index.css">
 {% endblock %}
 
 
@@ -13,9 +14,24 @@
 	<script data-main="../dist/js/indexMain"  src="../dist/js/lib/require.js"></script>
 {% endblock %}
 
+
+{% block header %}
+	<h1>JavaScript Algorithms</h1>
+{% endblock %}
+
 {% block content %}
-	<h2>Javascript Algorithms</h2>
-	
+	<p id="index-caption">
+		This application presents JavaScript implementation of common Computer Science algorithms.
+	</p>
+
+	<p id="index-caption-bugs">For bugs and errors, please raise an <a href="https://github.com/abhimanyuPathania/javascript-algorithms/issues">issue on GitHub</a>.</p>
+
+	<div id="index-footer">
+		<p><a href="https://github.com/abhimanyuPathania/javascript-algorithms"><strong>JavaScript Algorithms</strong></a> has been built and is maintained by Abhimanyu Pathania</p>
+		<div id= "octoface">
+			<a href="https://github.com/abhimanyuPathania"><img src="/dist/img/octo-mark.png" alt="GitHub OctoIcon"></a>
+		</div>
+	</div>
 {% endblock %}
 
 

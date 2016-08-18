@@ -67,6 +67,14 @@ em {
 	font-style: italic;
 }
 
+p a {
+	color: $javascript-logo-yellow;
+
+	&:hover{
+		border-bottom: 1px solid;
+	}
+}
+
 #logo {
 	background-color: $javascript-logo-yellow;
 	color: $sidebar-dark-purple;

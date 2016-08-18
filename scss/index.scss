@@ -1,0 +1,116 @@
+@import "constants/all";
+
+
+@keyframes headerSwipe {
+	from {
+		width: 0;
+	}
+
+	to {
+		width: 100%;
+	}
+}
+
+$index-page-header-height: 200px;
+$index-page-octoicon-size: 32px;
+
+#page-content{
+	// Apply paddings on page-content wrapper div instead of #content, #heading
+	padding: 40px 20px;
+	padding-bottom: 0px;
+
+	// min-height = viewport height; to force the sticky footer
+	min-height: 100vh;
+}
+
+#header {
+	height: $index-page-header-height;
+	overflow: hidden;
+	animation-name: headerSwipe;
+	animation-duration: 800ms;
+	animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+		
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+
+	// padding spaceing is acquired from the page-content wrapper
+	padding: 0px;
+
+	h1 {
+
+		font-family: sans-serif;
+		font-size: 5vw;
+		font-weight: bold;
+
+		// center vertically
+		line-height: $index-page-header-height;
+		white-space: nowrap;
+		background-color: $javascript-logo-yellow;
+
+		max-width: 100%;
+		
+		border-radius: inherit;
+		padding: 0px 40px;	
+	}
+}
+
+#content{
+	// padding spaceing is acquired from the page-content wrapper
+	padding: 0px;
+
+	padding-top: 20px;	
+	position: relative;
+
+	// Viewport Height - header height - page-content-padding-top
+	min-height: calc(100vh - 200px - 40px);
+
+	opacity: 0;
+	@include apply-transition(opacity, 360ms, ease);
+
+	&.visible{
+		opacity: 1;
+	}
+}
+
+
+
+#index-footer{
+	// sticky footer
+	position: absolute;
+	bottom: 0;
+
+	width: 100%;
+	padding: 10px;
+	padding-top: 20px;
+	background-color: rgba(0,0,0,0.04);
+
+	p{
+		font-size: 14px;
+		text-align: center;
+	}
+}
+
+#index-caption{
+	font-size: 24px;
+	font-weight: $font-weight-light;
+}
+
+#index-caption-bugs{
+	margin-top: 10px;
+	font-size: 14px;
+	font-style: italic;
+}
+
+#octoface {	
+	text-align:center;
+	margin-top: 8px;
+	a{
+		display: inline-block;
+		width: $index-page-octoicon-size;
+		height: $index-page-octoicon-size;
+
+		img{
+			width: 100%;
+		}
+	}
+}
