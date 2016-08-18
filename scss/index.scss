@@ -24,6 +24,8 @@ $index-page-octoicon-size: 32px;
 }
 
 #header {
+	display: none;
+	
 	height: $index-page-header-height;
 	overflow: hidden;
 	animation-name: headerSwipe;
