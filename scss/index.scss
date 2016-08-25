@@ -11,60 +11,74 @@
 	}
 }
 
-$index-page-header-height: 200px;
+$index-page-banner-height: 200px;
+$index-page-banner-height-tablet: 170px; // tablet/ tablet-small
+$index-page-banner-height-phone: 150px;
+$index-page-banner-height-phone-small: 120px; // phone-potrait
+
 $index-page-octoicon-size: 32px;
 
+
 #page-content{
-	// Apply paddings on page-content wrapper div instead of #content, #heading
-	padding: 40px 20px;
+	padding-top: 0px;
 	padding-bottom: 0px;
+}
+
+#header{
+	display: none;
+}
+
+#content {
+
+	// space between top of window and banner
+	padding-top: $page-content-padding-spacing;
 
 	// min-height = viewport height; to force the sticky footer
 	min-height: 100vh;
 }
 
-#header {
+#banner {
+	// banner is displayed when indexViewModel.js is loaded
 	display: none;
 	
-	height: $index-page-header-height;
+	// display flex added by JS
+	align-items: center;
+
+	height: $index-page-banner-height;
 	overflow: hidden;
 	animation-name: headerSwipe;
 	animation-duration: 800ms;
 	animation-timing-function: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-		
-	border-top-right-radius: 12px;
-	border-bottom-right-radius: 12px;
+	
+	background-color: $javascript-logo-yellow;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
 
-	// padding spaceing is acquired from the page-content wrapper
-	padding: 0px;
-
-	h1 {
+	span {
 
 		font-family: sans-serif;
 		font-size: 5vw;
 		font-weight: bold;
 
 		// center vertically
-		line-height: $index-page-header-height;
+		// line-height: $index-page-banner-height;
 		white-space: nowrap;
-		background-color: $javascript-logo-yellow;
-
 		max-width: 100%;
 		
 		border-radius: inherit;
-		padding: 0px 40px;	
+		padding: 0px 20px;	
 	}
 }
 
-#content{
-	// padding spaceing is acquired from the page-content wrapper
-	padding: 0px;
+#caption-footer-wrapper{	
 
-	padding-top: 20px;	
-	position: relative;
+	// sticky footer
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 
-	// Viewport Height - header height - page-content-padding-top
-	min-height: calc(100vh - 200px - 40px);
+	// Viewport Height - banner height - content-padding-top
+	min-height: calc(100vh - #{$index-page-banner-height} - #{$page-content-padding-spacing});
 
 	opacity: 0;
 	@include apply-transition(opacity, 360ms, ease);
@@ -74,16 +88,11 @@ $index-page-octoicon-size: 32px;
 	}
 }
 
-
-
 #index-footer{
-	// sticky footer
-	position: absolute;
-	bottom: 0;
-
 	width: 100%;
 	padding: 10px;
 	padding-top: 20px;
+	margin-top: 40px;
 	background-color: rgba(0,0,0,0.04);
 
 	p{
@@ -93,6 +102,9 @@ $index-page-octoicon-size: 32px;
 }
 
 #index-caption{
+	// space between banner and caption
+	padding-top: 20px;
+
 	font-size: 24px;
 	font-weight: $font-weight-light;
 }
@@ -114,5 +126,80 @@ $index-page-octoicon-size: 32px;
 		img{
 			width: 100%;
 		}
+	}
+}
+
+@include mobile{
+	#content {
+		// space between top of window and banner
+		padding-top: $navbar-height + $page-content-padding-spacing;
+	}
+}
+
+@include tablet{
+	
+	#banner {
+		height: $index-page-banner-height-tablet;
+
+		span{
+			font-size: 6vw;
+		}
+	}
+
+	#caption-footer-wrapper{	
+		min-height: calc(100vh - #{$index-page-banner-height-tablet} - #{$page-content-padding-spacing} - #{$navbar-height});
+	}
+}
+
+@include tablet-small {
+	#content{
+		padding-top: $navbar-height + $page-content-padding-spacing-small;
+	}
+
+	#caption-footer-wrapper{	
+		min-height: calc(100vh - #{$index-page-banner-height-tablet} - #{$page-content-padding-spacing-small} - #{$navbar-height});
+	}
+}
+
+
+@include phone-landscape {
+	#banner {
+		height: $index-page-banner-height-phone;
+
+		span{
+			font-size: 7vw;
+		}
+	}
+
+	#index-caption {
+		font-size: 18px;
+	}
+
+	#caption-footer-wrapper{	
+		min-height: calc(100vh - #{$index-page-banner-height-phone} - #{$page-content-padding-spacing-small} - #{$navbar-height});
+	}
+}
+
+
+@include phone-potrait{
+	#banner {
+		height: $index-page-banner-height-phone-small;
+
+		span{
+			font-size: 7.5vw;
+		}
+	}
+
+	#caption-footer-wrapper{	
+		min-height: calc(100vh - #{$index-page-banner-height-phone-small} - #{$page-content-padding-spacing-small} - #{$navbar-height});
+	}
+
+	#index-caption {
+		font-size: 17px;
+	}
+
+	#index-caption-bugs,
+	#index-footer p{
+		font-size: 13px;
 	}
 }

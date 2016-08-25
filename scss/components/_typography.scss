@@ -75,7 +75,13 @@ p a {
 	}
 }
 
-#logo {
+section .code-block-wrapper {
+	font-size: 14px;
+	background: #f5f2f0; // backup
+	background-image: url("/dist/img/backgrounds/hexa.png");
+}
+
+#sidebar-logo {
 	background-color: $javascript-logo-yellow;
 	color: $sidebar-dark-purple;
 }
@@ -93,6 +99,10 @@ p a {
 	.sub-menu-dropdown{
 		user-select: none;
 		cursor: context-menu; 
+	}
+
+	.sub-menu-item a {
+		font-size: $font-size-base - 2px;
 	}
 
 	a:hover,
@@ -137,7 +147,49 @@ p{
 	line-height: 1.5;
 }
 
-#footer{
-	background-color: #f1f1f1;
-	padding: 20px 0px;
+a.icon-heading{
+	cursor: pointer;
+}
+
+@include mobile{
+
+	#navbar {
+		background-color: $javascript-logo-yellow;
+		box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+
+		i {
+			user-select: none;
+		}
+
+		// Navbar text
+		span {
+			font-size: 18px;
+		}
+	}
+
+	// Navicon
+	#navicon{
+		cursor: pointer;
+	}
+
+	#sidebar{
+		box-shadow: 2px 0px 4px 0px rgba(0, 0, 0, 0.15);
+	}
+}
+
+
+@include tablet-small {
+	body {
+		font-size: $font-size-tablet-small;
+	}
+
+	section .code-block-wrapper {
+		font-size: 12px;
+	}
+
+	#sidebar .menu-item {
+		.sub-menu-item a {
+			font-size: $font-size-tablet-small - 1px; //13px
+		}
+	}
 }

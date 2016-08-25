@@ -12,7 +12,28 @@ define([
 		var parentRef = params.parentRef;
 		var urlMapper = {};
 
+		// Takes "text" from urlMapper's item. Updated on reload
+		self.navbarText = ko.observable();
+
+		// Tracks "show-sidebar" class on "#sidebar" div
+		self.showSidebar = ko.observable(false);
+
+		// Material icon used for "sub-menu-items"
 		self.subItemIcon = "keyboard_arrow_right";
+
+		// the 'active' observable properties on items with submenus are redundant
+		// since submenus can never be in active state. Those observables always 
+		// remain false and are present because of the inablility to conditionally use
+		// the "css binding".
+		self.menuItems = sidebarMenuItems;
+		
+
+
+		self.toggleSidebar = function(){
+			// toggle observable tracking class "show-sidebar"
+			self.showSidebar(!self.showSidebar());
+		};
+
 		self.toggleSubMenu = function(data, event){
 
 			// Look for parent anchor with class "icon-heading"; 
@@ -30,6 +51,7 @@ define([
 						// toggle
 						item.open(!item.open());
 					} else {
+						// close the rest
 						item.open(false);
 					}
 				});
@@ -40,17 +62,6 @@ define([
 				return true;
 			}
 		};
-
-		self.dummy = function(){
-			console.log("dummy!");
-			return true;
-		};
-
-		// the 'active' observable properties on items with submenus are redundant
-		// since submenus can never be in active state. Those observables always 
-		// remain false and are present because of the inablility to conditionally use
-		// the "css binding".
-		self.menuItems = sidebarMenuItems;
 
 		self.handleSortingPageSidebar = function(){
 			// this function is only handles the sidebar for the "/sorting" page
@@ -125,10 +136,16 @@ define([
 
 					//open the menu-item dropdown menu
 					urlMapper[menuItemHref].item.open(true);
+
+					// set the text on NavBar
+					self.navbarText(urlMapper[menuItemHref].item.text);
 				} else {
 					// if the is no submenu; 
 					// add the active class to menu-item
 					urlMapper[menuItemHref].active(true);
+
+					// set the text on NavBar
+					self.navbarText(urlMapper[menuItemHref].text);
 				}
 			}
 	

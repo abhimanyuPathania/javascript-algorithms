@@ -13,24 +13,12 @@
 	font-weight: $font-weight-bold;
 }
 
-
-
-pre[class*="language-"]{
-	font-size: 14px;
-	padding: 0 1em;
-
-	border-left: 5px solid $javascript-logo-yellow;
-	border-top-right-radius: 8px;
-	border-bottom-right-radius: 8px;
-
-/* 	max-width: 80%;
-	margin: 0px auto; */
-}
-
-// add the hexa background to code blocks
-:not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-	background-image: url("/dist/img/backgrounds/hexa.png");
+	// These styles are inherited from the ".code-block-wrapper" div
+	font-size: inherit;
+	background: inherit;
+	border-radius: inherit;
+	padding: 0 1em;
 }
 
 
@@ -40,6 +28,5 @@ pre[class*="language-"] {
 	animation-timing-function: linear;
 	animation-iteration-count: infinite;
 }
-
 
 

@@ -15,3 +15,70 @@
 	transition-timing-function: $timing-function;
 
 }
+
+@mixin center-content-vertically{
+	display:flex;
+	align-items: center;
+}
+
+@mixin center-content{
+	@include center-content-vertically;
+	justify-content: center;
+}
+
+@mixin clearfix {
+	content: " ";
+	display: block;
+	height: 0;
+	font-size: 0;
+	visibility: hidden;
+	clear: both;
+}
+
+@mixin remove-clearfix {
+	content: none;
+	display: none;
+	height: 0;
+	font-size: 0;
+	visibility: hidden;
+	clear: none;
+}
+
+
+// MEDIA QUERIES
+
+
+@mixin mobile {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+
+
+
+@mixin tablet {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+
+@mixin tablet-small {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+
+@mixin phone-landscape {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+
+@mixin phone-potrait {
+  @media (max-width: 320px) {
+    @content;
+  }
+}

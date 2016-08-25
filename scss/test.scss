@@ -1,12 +1,9 @@
-@import "constants/variables";
+@import "constants/all";
 
-@mixin apply-transition($prop, $duration, $timing-function){
 
-	transition-property: $prop;
-	transition-duration: $duration;
-	transition-timing-function: $timing-function;
-}
-
-.test{
-	@include apply-transition((background-color, color) , 300ms, ease-out);
+.second {
+   .first ~ & {
+       /* styles to be applied to .second if a .first exists at the same node level */
+       color:red;   
+   }
 }

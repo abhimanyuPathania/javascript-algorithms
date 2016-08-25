@@ -1,66 +1,102 @@
-@mixin sub-menu-transition-close($time) {
-	/* fade out, then shrink */
-    transition: opacity $time,
-                font-size $time $time,
-                padding $time $time,
-                margin $time $time;
-   	transition-timing-function: ease-out;
+
+$sub-menu-wrapper-max-height: 300px;
+$sidebar-width-1200px: 22.5%;
+
+$menu-items-padding-left-desktop: 20px;
+
+
+
+section{
+	margin-bottom: $section-margin-bottom;
+	
+	// last section of the page(#content) has no margin bottom
+	@at-root #content > section:last-child {
+		margin-bottom: 0px;
+	}
+	
+	h2 {
+		margin-bottom: $section-h2-margin-bottom;
+	}
+
+	h3 {
+		margin-bottom: $section-h3-margin-bottom;
+	}
+
+	.code-block-wrapper {
+		margin: $section-margin-code-blocks 0px;
+		border-left: 5px solid $javascript-logo-yellow;
+		border-top-right-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+	
+	// for ".code-block-wrapper" which is next sibling of
+	// h2/h3, in the given section, remove margin-top to use
+	// margin-bottom of the h2/h3 instead
+	h2 + .code-block-wrapper,
+	h3 + .code-block-wrapper{
+		margin-top: 0px;
+	} 
+
+	.code-text{
+		margin-bottom: 20px;
+
+		p {
+			margin-bottom: 10px;
+
+			// for last para of code-text div
+			&:last-of-type{
+				margin-bottom: 0px;
+			}
+		}
+	}
 }
 
-@mixin sub-menu-transition-open($time) {
- /* unshrink, then fade in */
-    transition: font-size $time,
-                padding $time,
-                margin $time,
-                opacity $time $time; // time delay
-    transition-timing-function: ease-out;
+
+#main::after {
+	@include clearfix;
 }
-
-
-$sidebar-dropdown-transition-time: 150ms;
 
 #page-content {
 	float: right;
 	width: 100% - $menu-width-desktop;
-	padding-top: 40px;
-	padding-bottom: 40px;
+
+	// padding-top = $sidebar-logo-height
+	padding: $sidebar-logo-height $page-content-padding-spacing 40px;
 }
 
-#header h1{
-	margin-bottom: 32px;
-}
+#header {
+	margin-bottom: 40px;
 
-#content{
-	
-	h2 {
-		margin: 24px 0px;
-	}
-
-	h3 {
-		margin: 20px 0px;
+	h1{
+		padding-bottom: 16px;
+		border-bottom: 2px solid $javascript-logo-yellow;
 	}
 }
 
+
+#navbar {
+	display: none;
+}
 
 #sidebar {
 	position: fixed;
 	float: left;
-	width: $menu-width-desktop;// 20%
+	width: $menu-width-desktop; // 20%
 	height: 100%;
 	overflow: auto;
 }
 
-#header, #content{
-	padding-left: 20px;
-	padding-right: 20px;
-}
 
-#logo {
+#sidebar-logo {
 	margin-bottom: 20px;
 
 	a {
 		display: block;
-		padding: 20px;
+		width: 100%;
+		height: $sidebar-logo-height;
+
+		line-height: $sidebar-logo-height;
+		text-align: center;
 	}
 }
 
@@ -79,7 +115,7 @@ $sidebar-dropdown-transition-time: 150ms;
 	// make the whole link clickable
 	&> a,
 	.sub-menu-dropdown{
-		padding: 10px 20px;
+		padding: 10px 20px 10px $menu-items-padding-left-desktop;
 	}
 
 	&.active{
@@ -87,29 +123,27 @@ $sidebar-dropdown-transition-time: 150ms;
 		@include apply-transition((color, text-shadow, border-right), 
 								$transition-duration-base, ease-out);
 	}
+	
+	// hide dropdowns
+	.sub-menu-wrapper{
+		max-height: 0px;
+		opacity: 0;
+		overflow: hidden;
+
+		@include apply-transition((max-height,opacity), $transition-duration-base, ease-out);
+	}
 
 	.sub-menu-item {
-		
-		&.active{
-			// this is the transition for an active sub-menu-item; when the parent 
-			// menu-item is toggled.
 
-			// reduce the border-right to 0px; 
-			border-right: 0px solid $javascript-logo-yellow;
-			transition-property: color, text-shadow, border-right;
+		border-right: 0px solid $javascript-logo-yellow;
+		@include apply-transition(border-right, $transition-duration-fast, ease);
 
-			// match the border transition to the one of fading out sub-menu-items for the
-			// closing dropdown
-  			transition-duration: $transition-duration-base, $transition-duration-base, $sidebar-dropdown-transition-time;
+		&.active {
+			border-right: 8px solid $javascript-logo-yellow;
 		}
 
-		/* close dropdown */
-		a,
-		.material-icons {
-			font-size: 0;
-	    	opacity: 0;
-	   		padding: 0;
-	   		@include sub-menu-transition-close($sidebar-dropdown-transition-time);
+		a {
+			padding: 10px 20px 10px $menu-items-padding-left-desktop + 8px;
 		}
 
 		.material-icons{
@@ -119,30 +153,17 @@ $sidebar-dropdown-transition-time: 150ms;
 
 	// dropdown notch
 	.dropdown-notch{
-		transition: transform $sidebar-dropdown-transition-time ease-out;
+		transition: transform $transition-duration-base ease-out;
 	}
 }
 
 /* reveal dropdown */
 #sidebar .menu-item.open {
-
-	.sub-menu-item.active {
-		border-right: 8px solid $javascript-logo-yellow;
-	}
-
-	.sub-menu-item a {
-		padding: 10px 20px 10px 40px;
-		font-size: $font-size-base - 2px;
-		opacity: 1;
-	    @include sub-menu-transition-open($sidebar-dropdown-transition-time);
-	}
 	
-	// separate "open" transition state for the material icons
-	// use the same transition but different target font-size value
-	.sub-menu-item .material-icons{
-		font-size: $font-size-icon-base;
+	// show dropdown
+	.sub-menu-wrapper{
 		opacity: 1;
-    	@include sub-menu-transition-open($sidebar-dropdown-transition-time);
+		max-height: $sub-menu-wrapper-max-height;
 	}
 
 	.dropdown-notch{
@@ -157,16 +178,115 @@ $sidebar-dropdown-transition-time: 150ms;
 }
 
 
-a.icon-heading{
-	cursor: pointer;
+
+@media (min-width: 961px) and (max-width: 1200px) {
+
+	#page-content {
+		width: 100% - $sidebar-width-1200px;
+	}
+	
+	#sidebar {
+		width: $sidebar-width-1200px;
+	}
 }
 
+@include mobile {
+	#main::after {
+		@include remove-clearfix;
+	}
 
-.clearfix:after{
-	content: " ";
-	display: block;
-	height: 0;
-	font-size: 0;
-	visibility: hidden;
-	clear: both;
+	#page-content {
+		float: none;
+		width: 100%;
+		padding-top: $navbar-height + 40px;
+	}
+
+	#sidebar {
+		position: fixed;
+		z-index: 1;
+		opacity: 0.97;
+		float: none;
+		width: $menu-width-tablet; // 20%
+		height: 100%;
+		
+		// push sidebar out of view
+		transform: translateX(-$menu-width-tablet);
+		@include apply-transition(transform, $transition-duration-base, ease-out);
+
+		&.show-sidebar{
+			transform: translateX(0px);
+		}
+	}
+
+	#navbar{
+		
+		@include center-content-vertically;
+
+		// push the div containg navicon, header and the home icon link
+		// to the opposite ends of the navbar
+		justify-content: space-between;
+
+		// sticky navbar
+		position: fixed;
+
+		// place it over the sidebar
+		z-index: 2; // #sidebar -> z-index:1
+
+		width: 100%;
+		height: $navbar-height;
+		
+		// 6px padding-left to the navicon(48px wide) lines it up with the icon-heading's
+		// 20px padding-left in the sidebar
+		padding: 0px 6px;
+		
+		// wrapper div around navicon and header text
+		div:first-child {
+			@include center-content-vertically;
+		}
+
+		i {
+			width: $navbar-height;
+			height: $navbar-height;
+
+			@include center-content;
+		}		
+	}
+	
+	// Navicon
+	#navicon{
+		margin-right: 6px;
+	}
+	
+	// remove the header from page-content. The header is displayed inside navbar.
+	#header{
+		display: none;
+	}
+}
+
+@include tablet-small {
+	// reduce the left-right padding
+	#page-content{
+		padding-left: $page-content-padding-spacing-small;
+		padding-right: $page-content-padding-spacing-small;
+	}
+}
+
+/* @include phone-landscape {
+
+	// limit the size of code-blocks
+	section .code-block-wrapper {
+		max-height: calc(100vh - #{$navbar-height} - 2 * 14px);
+		overflow-y: auto;
+	}
+} */
+
+// for the sidebar menu
+@media (max-width: 280px){
+
+	#sidebar{
+		width: 90%;
+
+		// push sidebar out of view
+		transform: translateX(-100%);
+	}
 }

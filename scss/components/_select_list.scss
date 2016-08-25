@@ -74,8 +74,17 @@ $ko-select-list-selected-item-spacing: 5px;
 .ko-select-list-options{
 	position: absolute;
 	top: 100%;
-	left: -1px;
+
+	// ".ko-select-list-options" div is child of ".ko-select-list" div.
+	// Hence, with width: 100%; the "options" div will be 2px smaller due
+	// to border of the parent div.
+
+	// Compensate 2px for border-left/right of parent div
 	width: calc(100% + 2px);
+	
+	// compensate for 1px border-left of parent to align with it. 
+	left: -1px;
+
 	max-height: 150px;
 	overflow: auto;
 	
@@ -133,3 +142,11 @@ $ko-select-list-selected-item-spacing: 5px;
 		}
 	}
 }
+
+
+// Firefox aligning bug; 1px instead of 2px
+/* @-moz-document url-prefix() {
+    .ko-select-list-options {
+    	width: calc(100% + 1px);
+    }
+} */

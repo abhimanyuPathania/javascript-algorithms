@@ -6,53 +6,51 @@
 $sorting-test-bench-bar-height: 24px;
 
 
-
-.sort-code{
-	margin: 30px 0px;
+// make the h2 and .sort-running-time closer.
+// But this affects the test bench section h2 as well.
+// That is overwritten by more specific rule
+section h2{
+	margin-bottom: 10px;
 }
 
-.sort-text {
-	margin: 20px 0px;
+.sort-running-time{
+	// same margin as section h2
+	margin-bottom: $section-h2-margin-bottom;
+}
 
-	p {
-		margin-bottom: 10px;
 
-		&:last-of-type{
-			margin-bottom: 0px;
-		}
+// overwrite the "section h2 {margin-bottom: 10px;} rule"
+#sorting-test-bench-wrapper {
+	
+	h2{
+		margin-bottom: $section-h3-margin-bottom;
 	}
-}
-
-
-
-#sorting-test-bench-wrapper{
-	margin-top: 30px;
 
 	p {
-		margin-bottom: 10px;
+		margin-bottom: 10px;		
 	}
 }
 
 #sorting-test-bench{
-	margin-top: 30px;
+	margin-top: $section-margin-code-blocks;
 
-	#sorting-test-bench-inputs {
-		width: 50%;
-		float: left;
-		padding: 0px 20px;
-
-		input[type=text]{
-			width: 100%;
-		}
-	}
-
-	#sorting-test-bench-results{
-		width: 50%;
-		float: right;
-		padding: 0px 20px;
-	}
-
+	display: flex;
+	flex: 1;
 }
+
+#sorting-test-bench-inputs {
+	flex: 1;
+	margin-right: $page-content-padding-spacing;
+
+	input[type=text]{
+		width: 100%;
+	}
+}
+
+#sorting-test-bench-results{
+	flex: 1;
+}
+
 
 
 // too specific when inside #sorting-test-bench-inputs
@@ -127,17 +125,16 @@ $sorting-test-bench-bar-height: 24px;
 	&.fastest{
 
 		.sort-stat-text{
-			font-weight: $font-weight-bold;
-			color: $javascript-logo-yellow;
+			color: $fastest-sort-green;
 		}
 
 		.sort-stat-time-text {
 			color: #FFF;
-			background-color: $javascript-logo-yellow;
+			background-color: lighten($fastest-sort-green, 15%);
 		}
 
 		.sort-stat-bar{
-			background-color: $javascript-logo-yellow;
+			background-color: lighten($fastest-sort-green, 15%);
 		}
 	}
 
@@ -147,10 +144,10 @@ $sorting-test-bench-bar-height: 24px;
 		}
 		.sort-stat-time-text {
 			color: $highlight-error-red;
-			background-color: lighten($highlight-error-red, 20%);
+			background-color: lighten($highlight-error-red, 16%);
 		}
 		.sort-stat-bar{
-			background-color: lighten($highlight-error-red, 20%);
+			background-color: lighten($highlight-error-red, 16%);
 		}
 	}
 }
@@ -192,14 +189,56 @@ $sorting-test-bench-bar-height: 24px;
 	height: 100%;
 	width: 0%;
 	background-color: $button-bgc;
-	@include apply-transition(width, 500ms, ease);
+	@include apply-transition(width, $transition-duration-slow, ease);
 }
 
 
 #quicksort-pivot-repersentation{
 	display: flex;
 	justify-content: center;
+	margin-top: 16px;
 	span {
 		margin-right: 12px;
+	}
+}
+
+
+
+// mini break point to change test bench layout
+@media (max-width: 600px) {
+	#sorting-test-bench{
+		display: flex;
+		flex-direction: column;
+	}
+
+	#sorting-test-bench-inputs {
+		flex: none;
+		margin-right: 0px;
+		margin-bottom: 32px;
+	}
+
+	#sorting-test-bench-results{
+		flex: none;
+	}
+}
+
+
+// for test bench control buttons
+@media (max-width: 290px){
+	#sorting-test-bench-controls {
+		margin-top: 20px;
+		
+		display: flex;
+		flex-direction: column;
+		
+		button {
+			margin-left: 0px;
+		}
+
+		button:last-child {
+			// render the "RUN" button first
+			order: -1;
+			margin-bottom: 10px;			
+		}
 	}
 }

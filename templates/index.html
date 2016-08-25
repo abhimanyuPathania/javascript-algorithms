@@ -15,21 +15,26 @@
 {% endblock %}
 
 
-{% block header %}
-	<h1>JavaScript Algorithms</h1>
-{% endblock %}
-
 {% block content %}
-	<p id="index-caption">
-		This application presents JavaScript implementation of common Computer Science algorithms.
-	</p>
+	<div id="banner">
+		<span>JavaScript Algorithms</span>
+	</div>
+	
+	<div id="caption-footer-wrapper">
+		<div id="caption-wrapper">
+			<p id="index-caption">
+			This application presents JavaScript implementation of common Computer Science algorithms.
+			</p>
 
-	<p id="index-caption-bugs">For bugs and errors, please raise an <a href="https://github.com/abhimanyuPathania/javascript-algorithms/issues">issue on GitHub</a>.</p>
+			<p id="index-caption-bugs">For bugs and errors, please raise an <a href="https://github.com/abhimanyuPathania/javascript-algorithms/issues">issue on GitHub</a>.</p>
+		</div>
 
-	<div id="index-footer">
-		<p><a href="https://github.com/abhimanyuPathania/javascript-algorithms"><strong>JavaScript Algorithms</strong></a> has been built and is maintained by Abhimanyu Pathania</p>
-		<div id= "octoface">
-			<a href="https://github.com/abhimanyuPathania"><img src="/dist/img/octo-mark.png" alt="GitHub OctoIcon"></a>
+
+		<div id="index-footer">
+			<p><a href="https://github.com/abhimanyuPathania/javascript-algorithms"><strong>JavaScript Algorithms</strong></a> has been built and is maintained by Abhimanyu Pathania</p>
+			<div id= "octoface">
+				<a href="https://github.com/abhimanyuPathania"><img src="/dist/img/octo-mark.png" alt="GitHub OctoIcon"></a>
+			</div>
 		</div>
 	</div>
 {% endblock %}

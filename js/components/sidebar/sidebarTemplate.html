@@ -8,8 +8,16 @@
     	<span data-bind="text:text"></span>
 </script>
 
-<div id="sidebar">
-	<div id="logo">
+<div id="navbar">
+	<div>
+		<i id="navicon" class="material-icons" data-bind="click: toggleSidebar">menu</i>
+		<span data-bind="text: navbarText"></span>
+	</div>	
+	<a href="/"><i class="material-icons">home</i></a>
+</div>
+
+<div id="sidebar" data-bind="css:{'show-sidebar': showSidebar}">
+	<div id="sidebar-logo">
 		<strong><a href="/">JavaScript Algorithms</a></strong>
 	</div>
 	
@@ -35,7 +43,7 @@
 					<i class="material-icons dropdown-notch">arrow_drop_down</i>
 				</div>
 
-				<div  data-bind="foreach: subMenuItems">
+				<div  class="sub-menu-wrapper" data-bind="foreach: subMenuItems">
 					<div class="sub-menu-item" data-bind="css: {active: active}">
 						<a class = "icon-heading" data-bind = "
 							attr: {href: href},
