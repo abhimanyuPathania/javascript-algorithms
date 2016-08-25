@@ -162,6 +162,9 @@ function(ko, $, Sammy, helper) {
 
 			// make it the only item in choosen sort
 			self.testBenchSorts([newSort]);
+
+			// scroll to top of the page
+			helper.scrollToTop();
 		};
 
 		self.animateSortBar = function(domArr, dataItem){
@@ -244,6 +247,8 @@ function(ko, $, Sammy, helper) {
 
 		function giveWidthTestBenchResults(max, min){
 
+			// Called by myWebWorker on the "complete" command by WW.
+
 			var testBenchResultsArr = self.testBenchResults();
 
 			// These variables track if the "fastest/slowest" classes have been applied
@@ -283,6 +288,9 @@ function(ko, $, Sammy, helper) {
 			// Bind new values. This will trigger the binded "afterRender" function,
 			// self.animateSortBar
 			self.testBenchResults(testBenchResultsArr);
+
+			// scroll to bottom to show results
+			helper.scrollToBottom();
 		}
 
 

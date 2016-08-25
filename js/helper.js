@@ -44,6 +44,14 @@ define([], function(){
 		// http://stackoverflow.com/a/10835227/2426469
 		isPositiveInteger: function(n){
 			return n >>> 0 === parseFloat(n);
+		},
+
+		scrollToTop: function(){
+			$("html, body").animate({ scrollTop: 0 }, 400);
+		},
+
+		scrollToBottom: function(){
+			$("html, body").animate({ scrollTop: $(document).height() }, 400);
 		}
 	};
 });
