@@ -81,18 +81,24 @@ function(ko, $, Sammy, helper) {
 		self.runTestBench = function() {
 
 			var arraySize = $.trim(self.randomArraySize());// entered by user in text input
+			var checkInput = true;
 
 			// If user does not enter a valid positive integer; show error.
 			if (!helper.isPositiveInteger(arraySize)){
 				self.testBenchError("Please enter a valid value for array size");
-				self.showTestBenchError(true);
-				return;
+				checkInput = false;
 			}
 
 			// If user selects no sorting algoritm; show error.
 			if (!self.testBenchSorts().length){
 				self.testBenchError("Please select atleast one sorting algorithm");
+				checkInput = false;
+			}
+
+			// show the error and return
+			if (!checkInput) {
 				self.showTestBenchError(true);
+				helper.scrollToBottom();
 				return;
 			}
 
