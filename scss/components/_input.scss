@@ -1,28 +1,51 @@
+// This mixin creates the colored buttons using $button-map variable;
+
+// No color style is applied on the element "button". Instead, the 
+// default, grey, button is explicitly declared as "btn-grey".
+
+// The structural, spacing styles are applied to "button" element.
+
+// Currently there are two types of buttons used.
+//  	1. Normal button(default "button" element) with text.
+// 		2. Button with an Icon to left; identified by the ".icon-text-btn".
+// 			To make a yellow icon text button; will take the both classes
+// 			".icon-text-btn" followed by "btn-yellow". 
 
 @mixin create-buttons{
-	@each $name, $style-map in $button-map{
-		$mxn-bgc: map-get($style-map, background-color);
-		$mxn-color: map-get($style-map, color);
 
+	// For each button color
+	@each $name, $style-map in $button-map{
+		// get the background color 
+		$mxn-bgc: map-get($style-map, background-color);
+
+		// get text color
+		$mxn-color: map-get($style-map, color);
+		
+		// name contains the class applied to "button"; ex btn-grey
 		.#{$name}{
 			background-color: $mxn-bgc;
 			color: $mxn-color;
 			&:hover,
 			&:focus{
+				// darken on hover and focus
 				background-color: darken($mxn-bgc, $button-bgc-darken-offset);
 			}
 
 			&:active{
+				// darken more on active
 				background-color: darken($mxn-bgc, 2 * $button-bgc-darken-offset);
 			}
-
+			
+			// disabled style is same for all colored buttons
 			&:disabled{
-				//@include disabled-button;
 				background-color: $button-bgc-disabled;
 				color: lighten($font-color-main, 40%);
 			}
 		}
+		
+		// if the button is icon-text-btn and "$name"; ex ".icon-text-btn.btn-grey"
 
+		// The icon part of icon-text-btn is always darker than text part
 		.icon-text-btn.#{$name}{
 			i {
 				background-color: darken($mxn-bgc, $button-icon-bgc-darken-offset);
@@ -38,15 +61,12 @@
 			}
 
 			&:disabled i{
-				//@include disabled-button($icon-btn:true);
 				background-color: darken($button-bgc-disabled, $button-icon-bgc-darken-offset - 3%);
 				color: lighten($font-color-main, 40%);
 			}
 		}
 	}
 }
-
-
 
 ::-webkit-input-placeholder,
 :-moz-placeholder,

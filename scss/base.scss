@@ -30,3 +30,11 @@ pre[class*="language-"] {
 }
 
 
+@include tablet-small {
+	p .box-highlight {
+		padding: 2px 8px;
+		font-size: 13px;
+	}
+}
+
+

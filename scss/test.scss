@@ -1,9 +1,5 @@
 @import "constants/all";
 
-
-.second {
-   .first ~ & {
-       /* styles to be applied to .second if a .first exists at the same node level */
-       color:red;   
-   }
+#navbar{
+	tap-highlight-color: rgba(255, 255, 255, 0);
 }

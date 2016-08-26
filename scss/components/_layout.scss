@@ -269,6 +269,13 @@ section{
 		padding-left: $page-content-padding-spacing-small;
 		padding-right: $page-content-padding-spacing-small;
 	}
+	
+	//different box-highlight styles for the sort-running-time div
+	.sort-running-time .box-highlight {
+		padding: 5px 10px;
+		font-size: 13px;
+	}
+
 }
 
 /* @include phone-landscape {

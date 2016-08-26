@@ -156,6 +156,7 @@ a.icon-heading{
 	#navbar {
 		background-color: $javascript-logo-yellow;
 		box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.15);
+		-webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
 
 		i {
 			user-select: none;
