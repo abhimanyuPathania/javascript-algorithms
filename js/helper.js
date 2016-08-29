@@ -1,7 +1,20 @@
 "use strict";
 
-define([], function(){
+define(["jquery", "webworkerHelper"], function($, webworkerHelper){
+	
 	return {
+
+		showPage: function(){
+
+			setTimeout(function(){
+				// remove the loading div
+				$("#loading").css("display", "none");
+
+				// fade in "#main" and reveal
+				$("#main").addClass("show");
+			}, 0);
+		},
+
 		getRandomArray: function(size){
 
 			// Smallest value to be used in array; largest is 'size' - 1
@@ -29,16 +42,9 @@ define([], function(){
 			return false;
 		},
 
-		getSortText: function (s){
-			// bubbleSort -> Bubble Sort
-
-			if (!s){
-				return null;
-			}
-			
-			var sortType = s.substring(0, s.indexOf("Sort"));
-			return sortType[0].toUpperCase() + sortType.slice(1) + " Sort";
-		},
+		// add the "getSortText" function from webworkerHelper.js to helper.js
+		// for single import
+		getSortText: webworkerHelper["getSortText"],
 
 
 		// http://stackoverflow.com/a/10835227/2426469

@@ -4,6 +4,7 @@
 	This WebWorker runs the sorting code for the sort page.
 */
 
+
 // Call importScript asap.
 // "importScript" calls are synchronous
 self.importScripts("../lib/require.js");
@@ -271,13 +272,12 @@ var sortCode = {
 };
 
 
-
-
 // Require currently looks in the location of this file ie. "js/code"
 // Setting base URL to one dir back pushes it to the /js dir.
+
 require({
 	baseUrl: "../"
-}, ["helper"], function(helper) {
+}, ["webworkerHelper"], function(webworkerHelper) {
 	var data; // data object recived from main script
 
 	addEventListener("message", function(e){
@@ -301,7 +301,7 @@ require({
 	function runSortCode(){
 		var sortedArray;
 		var timesArray = [];
-		var randomArray = helper.getRandomArray(data.arraySize);
+		var randomArray = webworkerHelper.getRandomArray(data.arraySize);
 
 		// send "randomArray" built to main thread for UI
 		// postMessage({
@@ -310,7 +310,7 @@ require({
 		// });
 
 		data.sortTypes.forEach(function(sort){
-			var sortText = helper.getSortText(sort);
+			var sortText = webworkerHelper.getSortText(sort);
 			
 			postMessage({
 				cmd: "currentSortStatus",

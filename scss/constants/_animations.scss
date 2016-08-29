@@ -34,3 +34,15 @@
 		transform: rotate(360deg)
 	}
 }
+
+@keyframes loading-border-flicker {
+	from {
+		border-color: $javascript-logo-yellow;
+	}
+
+	to {
+		border-color: #FFF;
+	}
+}
+
+

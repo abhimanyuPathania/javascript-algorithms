@@ -81,6 +81,15 @@ section .code-block-wrapper {
 	background-image: url("/dist/img/backgrounds/hexa.png");
 }
 
+#loading {
+	font-size: 24px;
+	font-weight: $font-weight-light;
+	text-transform: uppercase;
+
+	color: hsla(0, 0%, 75%, 1);
+	user-select: none; 
+}
+
 #sidebar-logo {
 	background-color: $javascript-logo-yellow;
 	color: $sidebar-dark-purple;

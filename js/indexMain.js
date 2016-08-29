@@ -9,11 +9,18 @@ requirejs.config({
 
 
 require(
-	["knockout", "viewmodels/indexViewModel", "components/sidebar/sidebarViewModel", "lib/domReady!"],
+	[
+		"knockout",
+		"viewmodels/indexViewModel",
+		"components/sidebar/sidebarViewModel",
+		"helper",
+		"lib/domReady!"
+	],
 	
-	function(ko, IndexViewModel, sidebarComponent) {
+	function(ko, IndexViewModel, sidebarComponent, helper) {
 		ko.components.register("sidebar", sidebarComponent);
 		ko.applyBindings(new IndexViewModel());
+		helper.showPage();
 	}
 );
 
