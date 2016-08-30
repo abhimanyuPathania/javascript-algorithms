@@ -5,14 +5,20 @@ define(["jquery", "webworkerHelper"], function($, webworkerHelper){
 	return {
 
 		showPage: function(){
+			var main = $("#main");
 
+			// remove the loading div
+			$("#loading").css("display", "none");
+
+			// show the main div
+			main.css("display", "block");
+
+			// adding "show" class to "#main" without
+			// setTimeout does not trigger css transition
 			setTimeout(function(){
-				// remove the loading div
-				$("#loading").css("display", "none");
-
 				// fade in "#main" and reveal
-				$("#main").addClass("show");
-			}, 0);
+				main.addClass("show");
+			}, 100);
 		},
 
 		getRandomArray: function(size){
