@@ -48,6 +48,7 @@ function(ko, $, Sammy, helper) {
 
 		// Tracks if self.myWebWorker is ready to run code.
 		self.webWorkerSynced= ko.observable(false);
+		
 		// This observable along with 'webWorkerSynced' obs controls the run button.
 		// The "run" button is only enabled when both are true.
 		self.enableRunButton = ko.observable(true);
@@ -298,7 +299,6 @@ function(ko, $, Sammy, helper) {
 			// scroll to bottom to show results
 			helper.scrollToBottom();
 		}
-
 
 
 
