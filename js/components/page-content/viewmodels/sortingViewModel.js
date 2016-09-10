@@ -1,60 +1,62 @@
 "use strict";
 
 define( ["knockout", "jquery", "sammy", "helper"],
+
 function(ko, $, Sammy, helper) {
 
-	return function SortingViewModel() {
+	return function SortingViewModel(params) {
 
 		var self = this;
 
-		// reference to VM for components
-		self.parentRef = self;
+		// reference for sub components
+		self.pageContentViewModel = self;
+
+		// reference to the MasterViewModel
+		self.masterViewModel = params.masterViewModel;
 
 		// Use helper function in bindings 
 		self.helper = helper;
 
-		// tracks the current sort page. Updated on page swap via Sammy.
-		self.currentSort = ko.observable();
+		// re-assign the reference from MasterVM to this VM of the "section"
+		// tracking observable
+		self.currentSort = self.masterViewModel.currentActiveSection;
 
-		// controls the sort code in view
-		self.displaySort = {
-			bubbleSort: ko.observable(false),
-			selectionSort: ko.observable(false),
-			insertionSort: ko.observable(false),
-			mergeSort: ko.observable(false),
-			shellSort: ko.observable(false),
-			quickSort: ko.observable(false)
-		};
+
+		// re-assign the reference from MasterVM to this VM for backward compatibility
+		/*		
+			{
+				bubbleSort: ko.observable(false),
+				selectionSort: ko.observable(false),
+				insertionSort: ko.observable(false),
+				mergeSort: ko.observable(false),
+				shellSort: ko.observable(false),
+				quickSort: ko.observable(false)
+			};
+		*/
+		self.displaySort = self.masterViewModel.sectionData.observables;
 
 		// Object containing lowercase URL mappings to camelCased keys used in code.
-		self.URLMapper = {};
+		//self.URLMapper = {};
 
 		// Keep a sorted copy to be used on page swaps
 		self.availableSortsList = Object.keys(self.displaySort).sort();
-
-		// Build URL mapper object from "self.availableSortsList"
-		self.availableSortsList.forEach(function(sort){
-			self.URLMapper[sort.toLowerCase()] = sort; 
-		});
 
 		// Linked to Array size user input
 		self.randomArraySize = ko.observable();
 
 		// Tracks the sort types user wants to run on the set array size.
-		self.testBenchSorts = ko.observableArray([]);
+		// Initialize with self.currentSort
+		self.testBenchSorts = ko.observableArray([self.currentSort()]);
 
 		//current list used by the "select-list" component
-		self.availableSorts = ko.observableArray(self.availableSortsList);
+		self.availableSorts = ko.observableArray(getAvailableSorts());
 
 		// Tracks if self.myWebWorker is ready to run code.
-		self.webWorkerSynced= ko.observable(false);
+		self.webWorkerSynced = ko.observable(false);
 		
 		// This observable along with 'webWorkerSynced' obs controls the run button.
 		// The "run" button is only enabled when both are true.
 		self.enableRunButton = ko.observable(true);
-
-		// List of VMs of "ko-select-list" components on the page
-		self.koSelectListRef = [];
 
 		// Observable controlling "show" class on "#sorting-test-bench-error"
 		self.showTestBenchError = ko.observable(false);
@@ -142,33 +144,15 @@ function(ko, $, Sammy, helper) {
 		};
 
 		self.updateSortPage = function(){
+
+			// stop current running code if any
 			self.stopTestBench();
-			var avSort = self.availableSortsList;
-			var newSort = self.currentSort();
-			var avSortCopy;
 
-			// Remove current sort type from view
-			Object.keys(self.displaySort).forEach(function(sortName){
-				self.displaySort[sortName](false);
-			});
-
-			//turn-on the observable for selected sort type to display
-			self.displaySort[newSort](true);
-
-			
-			/*  Reset the testBenchSorts observable array. */
-			
-			// Remove the choosen sort from list of available sorts
-			// availableSortsList is already sorted. Use its copy; remove "newSort";
-			// and update the "self.availableSorts" obsArr used by "select-list" component
-			avSortCopy = avSort.slice();
-
-			// splice works in place and return the removed items instead
-			avSortCopy.splice(avSortCopy.indexOf(newSort), 1);
-			self.availableSorts(avSortCopy);
+			// update "availableSorts" for the "select-list" component
+			self.availableSorts(getAvailableSorts());
 
 			// make it the only item in choosen sort
-			self.testBenchSorts([newSort]);
+			self.testBenchSorts([self.currentSort()]);
 
 			// scroll to top of the page
 			helper.scrollToTop();
@@ -190,27 +174,19 @@ function(ko, $, Sammy, helper) {
 			}, 100);
 		};
 
-		// Make "self.updateSortPage" subscriber to "currentSort" observable.
-		self.currentSort.subscribe(self.updateSortPage);
-
-		// =================================================================== //
-
-		// Add the click event on document to close select-list dropdown on
-		// outside clicks.
-		$(document).click(function(event){
+		self.runSortingViewModel = function(){
 			
-			if (helper.closeKoSelectList($(event.target))){
+			// Make "self.updateSortPage" subscriber to "currentSort" observable.
+			self.currentSort.subscribe(self.updateSortPage);
 
-				// every ko-select-list component add a reference to its VM
-				// in parent's(sortingViewModel) self.koSelectListRef property.
-				
-				// Loop over all VMs and setting "dropdownOpen" property to false
-				// will close them.
-				self.koSelectListRef.forEach(function(selectListVM){
-					selectListVM.dropdownOpen(false);
-				});
-			}
-		});
+			// Start the WebWorker
+			setupWebWorker();
+		};
+
+		// RUN
+		self.runSortingViewModel();
+
+
 
 
 		function setupWebWorker() {
@@ -300,25 +276,22 @@ function(ko, $, Sammy, helper) {
 			helper.scrollToBottom();
 		}
 
+		function getAvailableSorts(){
+			
+			// This returns array of sorts after removing "currentSort"
+			var avSort = self.availableSortsList;
+			var currentSort = self.currentSort();
+			var avSortCopy;
+			
+			// Remove the choosen sort from list of available sorts
+			// availableSortsList is already sorted. Use its copy; remove "currentSort";
+			// and update the "self.availableSorts" obsArr used by "select-list" component
+			avSortCopy = avSort.slice();
 
-
-		// Start the WebWorker
-		setupWebWorker();
-
-		Sammy(function() {
-			this.get("#:sortSelected", function() {
-				var sortSelected = this.params.sortSelected;
-
-				// update the currentSort observable
-				self.currentSort(self.URLMapper[sortSelected]);
-			});
-
-			this.get("/sorting", function() {
-				//show bubblesort by default
-				this.app.runRoute("get", "#bubblesort");
-			});
-
-		}).run();
+			// splice works in place and return the removed items instead
+			avSortCopy.splice(avSortCopy.indexOf(currentSort), 1);
+			return avSortCopy;
+		}
 
 	};// End VM
 

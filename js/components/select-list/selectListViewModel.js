@@ -4,11 +4,13 @@ define([
 	"knockout",
 	"jquery",
 	"helper",
-	"lib/text!components/select_list/selectListTemplate.html"
+	"lib/text!components/select-list/selectListTemplate.html"
 ], function(ko, $, helper, htmlString){
 
 	function SelectListViewModel(params){
 		var self = this;
+
+		self.masterViewModel = params.masterViewModel;
 
 		// references to two observable arrays tracking
 		// selected/available options in the parent viewmodel(sortingViewModel)
@@ -49,12 +51,21 @@ define([
 			self.selectedOptions.push(data);
 		};
 
-		self.getListText = helper.getSortText;
+		self.getListText = function(s){
+			
+			// if function is required to get text to display
+			if (params.listTextFunction){
+				return params.listTextFunction(s);
+			} else {
+				// else use the key's strings
+				return s;
+			}
+		};
 
 		// =================================================================== //
 
-		// Add reference to VM of select-list to parent's "koSelectListRef" property
-		self.parentRef.koSelectListRef.push(self);
+		// Add reference to VM of select-list to master's "koSelectListRef" property
+		self.masterViewModel.koSelectListRef.push(self);
 	}
 
 	return {

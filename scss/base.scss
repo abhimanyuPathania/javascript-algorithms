@@ -14,10 +14,8 @@
 }
 
 pre[class*="language-"] {
-	// These styles are inherited from the ".code-block-wrapper" div
-	font-size: inherit;
-	background: inherit;
 	border-radius: inherit;
+	background: inherit;
 	padding: 0 1em;
 }
 

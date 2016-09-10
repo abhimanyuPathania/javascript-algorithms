@@ -1,24 +1,9 @@
 
-{% extends 'base.html' %}
-
-{% block title %}
-	<title>Sorting</title>
-{% endblock %}
-
-{% block style_sheets %}
-	<link rel="stylesheet" href="../dist/css/sorting.css">
-{% endblock %}
-
-
-{% block scripts %}	
-	<script data-main="../dist/js/sortingMain"  src="../dist/js/lib/require.js"></script>
-{% endblock %}
-
-{% block header %}
+<div id="header">
 	<h1>Sorting</h1>
-{% endblock %}
+</div>
 
-{% block content %}
+<div id="content">
 
 	<div id="sort">
 		
@@ -716,13 +701,15 @@ function quickSort(arr){
 		<div id="sorting-test-bench">
 			<div id="sorting-test-bench-inputs">
 
-				<div class="sorting-test-bench-input-field">
+				<div class="sorting-test-bench-input-field">				
 					<select-list
-						params = "options: availableSorts,
-								  selectedOptions: testBenchSorts,
-								  multiple: true,
-								  parentRef: parentRef">
-					</select-list>					
+							params = "pageContentViewModel: pageContentViewModel,
+									  masterViewModel: masterViewModel,
+									  options: availableSorts,
+									  selectedOptions: testBenchSorts,
+									  multipleItems: true,
+									  listTextFunction: helper.getSortText">
+					</select-list>				
 				</div><!-- sorting-test-bench-input-field -->
 
 				<div class="sorting-test-bench-input-field">
@@ -787,4 +774,5 @@ function quickSort(arr){
 
 		</div> <!-- sorting-test-bench -->
 	</section> <!-- sorting-test-bench-wrapper -->
-{% endblock %}
+
+</div><!-- CONTENT -->

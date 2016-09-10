@@ -1,11 +1,12 @@
 "use strict";
 
-define( ["knockout","jquery"], function(ko, $) {
+define( ["knockout", "jquery"], function(ko, $) {
 
-	return function IndexViewModel() {
+	return function IndexViewModel(params) {
 
 		var self = this;
-		self.parentRef = self;
+
+		self.masterViewModel = params.masterViewModel;
 
 		var banner = $("#banner");
 

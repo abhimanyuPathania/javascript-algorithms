@@ -5,7 +5,7 @@ import jinja2
 import os
 import logging
 
-template_dir = os.path.join(os.path.dirname(__file__), '..', 'templates')
+template_dir = os.path.join(os.path.dirname(__file__), '..', 'jinja_templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
 
     
