@@ -1,0 +1,91 @@
+
+<!DOCTYPE HTML>
+<html lang="EN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, intial-scale=1">
+
+		<link rel="stylesheet" href="../dist/css/base.css">
+	</head>
+	
+	<body>
+		<script data-main="../dist/js/main"  src="../dist/js/lib/require.js"></script>
+		
+		<script type="text/html" id="menu-item-anchor-template">
+	    	<i class="material-icons" data-bind="text:icon"></i>
+	    	<span data-bind="text:text"></span>
+		</script>
+
+		<script type="text/html" id="menu-item-span-template">
+	    	<i class="material-icons" data-bind="text:icon"></i>
+	    	<span data-bind="text:text"></span>
+		</script>
+
+		
+		<div id="loading">
+			<span>Loading</span>
+		</div>
+
+		<div id="main">
+			
+			<div id="sidebar-navbar-wrapper">
+				
+				<div id="navbar">
+					<div>
+						<i id="navicon" class="material-icons" data-bind="click: toggleSidebar">menu</i>
+						<span data-bind="text: navbarText"></span>
+					</div>	
+					<a href="/"><i class="material-icons">home</i></a>
+				</div>
+
+				<div id="sidebar" data-bind="css:{'show-sidebar': showSidebar}">
+					<div id="sidebar-logo">
+						<strong><a href="/">JavaScript Algorithms</a></strong>
+					</div>
+					
+					<div data-bind="foreach: sidebarArrayData">
+						<div class="menu-item" data-bind="click: subMenu ? $parent.toggleSubMenu : null,
+															css: {
+																	'open': open,
+																	active: active
+																}">
+							
+							<!-- ko ifnot: subMenu -->
+								<a class="icon-heading" data-bind = "
+									attr: {href: href},
+									template: {name: 'menu-item-anchor-template'}">
+								</a>
+							<!-- /ko -->
+
+							<!-- ko if: subMenu -->
+								<div class="sub-menu-dropdown">
+									<span class="icon-heading" data-bind = "
+										template: {name: 'menu-item-span-template'}">
+									</span>
+									<i class="material-icons dropdown-notch">arrow_drop_down</i>
+								</div>
+
+								<div  class="sub-menu-wrapper" data-bind="foreach: subMenuItems">
+									<div class="sub-menu-item" data-bind="css: {active: active}">
+										<a class = "icon-heading" data-bind = "
+											attr: {href: href},
+											template: {name: 'menu-item-anchor-template'}">
+										</a>
+									</div>
+								</div>
+							<!-- /ko -->
+
+						</div><!-- MENU ITEM -->
+				    </div><!-- MENU -->
+				</div><!-- SIDEBAR -->
+
+			</div><!-- SIDEBAR-NAVBAR-WRAPPER -->		
+			
+			<!-- page-content as a knockout component-->
+			<div id="page-content">
+				<page-content params = "masterViewModel: masterRef"></page-content>
+			</div>			
+		</div><!-- MAIN -->	
+
+	</body>
+</html>
