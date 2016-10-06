@@ -65,7 +65,10 @@ define(
 			// "run" is not called here
 			self.sammyRouter = Sammy(function() {
 				
-				this.get("#:sectionSelected", function() {
+				var sammyExp = pathname + "#:sectionSelected";
+				var sammyDefaultRoute = pathname + "#" + self.sectionData.defaultSection;
+
+				this.get(sammyExp, function() {
 					var sectionSelected = this.params.sectionSelected;
 					var sectionObservables = self.sectionData.observables;
 					var sectionObsKey = self.sectionData.urlHashMap[sectionSelected];
@@ -84,7 +87,7 @@ define(
 
 				this.get(pathname, function() {
 					//show "defaultSection" by default
-					this.app.runRoute("get", ("#" + self.sectionData.defaultSection));
+					this.app.runRoute("get", sammyDefaultRoute);
 				});
 			});
 		}

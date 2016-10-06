@@ -7,6 +7,7 @@ class SortingHandler(Handler):
 	def get(self):
 		return self.render('base.html')
 
+
 class MainHandler(Handler):
     def get(self):
         return self.render('base.html')

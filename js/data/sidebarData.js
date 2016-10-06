@@ -39,6 +39,7 @@ define(["knockout"], function(ko){
 
 
 	var sidebarArrayData = [
+	
 		{
 			text: "Sorting",
 			icon: "sort",

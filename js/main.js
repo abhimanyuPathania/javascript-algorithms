@@ -46,6 +46,31 @@ require(["config"], function(){
 		});
 	}
 
+/*	if (pathname === "/primes"){
+		require(
+			[
+				"knockout",
+				"viewmodels/masterViewModel",
+				"components/page-content/viewmodels/primesViewModel",
+				"lib/text!components/page-content/templates/primes.html",
+				"helper",
+				"lib/domReady!"
+			],
+		
+		function(ko, MasterViewModel, PrimeViewModel, primeTemplateString, helper) {
+			
+			ko.components.register("page-content", {	
+				viewModel: PrimeViewModel,
+				template: primeTemplateString
+			});
+
+			ko.applyBindings(new MasterViewModel(masterViewModelData[pathname]));
+			require(["prism"], function(){
+				// show page after running "prism" script
+				helper.showPage();
+			});	
+		});
+	}*/
 
 	if (pathname === "/sorting") {
 		require([
